@@ -351,10 +351,12 @@ async function save() {
     localStorage.setItem("ngincengStudioContent", JSON.stringify(data));
     $("status").textContent = "Tersimpan online";
     toast("Berhasil! Pengaturan dan konten tersimpan di Supabase.");
+    return true;
   } catch (error) {
     console.error("Gagal menyimpan ke Supabase:", error);
     $("status").textContent = "Gagal menyimpan online";
     toast("Gagal menyimpan: " + (error.message || "Periksa koneksi dan izin database."));
+    return false;
   } finally {
     isSaving = false;
     saveButtons.forEach(button => { button.disabled = false; });
@@ -805,9 +807,10 @@ $("reset").onclick = () => {
   toast("Pengaturan kembali ke bawaan. Klik Simpan Semua untuk menerapkannya online.");
 };
 
-/* Galeri portofolio masih lokal di browser. Integrasi penyimpanan online dilakukan pada tahap berikutnya. */
+/* Galeri layanan: file disimpan di Supabase Storage, metadata di tabel konten. */
 const PORT_DB = "ngincengMediaPortfolio";
 const PORT_STORE = "assets";
+const PORT_BUCKET = "nginceng-media";
 
 function openPortfolioDB() {
   return new Promise((resolve, reject) => {
@@ -821,7 +824,7 @@ function openPortfolioDB() {
   });
 }
 
-async function portfolioAll() {
+async function portfolioAllLocal() {
   const db = await openPortfolioDB();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(PORT_STORE, "readonly");
@@ -831,17 +834,7 @@ async function portfolioAll() {
   });
 }
 
-async function portfolioPut(item) {
-  const db = await openPortfolioDB();
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(PORT_STORE, "readwrite");
-    transaction.objectStore(PORT_STORE).put(item);
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error);
-  });
-}
-
-async function portfolioDelete(id) {
+async function portfolioDeleteLocal(id) {
   const db = await openPortfolioDB();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(PORT_STORE, "readwrite");
@@ -853,101 +846,229 @@ async function portfolioDelete(id) {
 
 function portfolioServices() { return data.services || []; }
 
-async function refreshPortfolioList() {
-  const serviceId = $("portfolioService").value;
-  const all = await portfolioAll();
-  const entries = all.filter(item => item.serviceId === serviceId);
-  $("portfolioList").innerHTML = entries.map(item => `
-    <div class="manage-item"><div class="media-row">
-      <div class="media-thumb" id="thumb-${esc(item.id)}"></div>
-      <div style="flex:1"><strong>${esc(item.title)}</strong><p>${esc(item.caption || "")} • ${item.kind === "video" ? "Video" : "Foto"}</p></div>
-      <button class="small-btn danger" data-delete-media="${esc(item.id)}">Hapus</button>
-    </div></div>`).join("") || "<p>Folder ini belum memiliki foto atau video.</p>";
+// Perbarui keterangan lama pada dashboard agar sesuai dengan penyimpanan online.
+(function updatePortfolioHelpText() {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (/disimpan lokal di browser/i.test(node.nodeValue)) {
+      node.nodeValue = "Foto dan video diunggah ke Supabase Storage dan dapat diakses dari perangkat lain setelah tersimpan online.";
+    }
+  }
+})();
 
-  for (const item of entries) {
-    const node = $("thumb-" + item.id);
-    if (node) {
-      if (item.kind === "image") {
-        const image = document.createElement("img");
-        image.className = "media-thumb";
-        image.src = URL.createObjectURL(item.blob);
-        node.replaceWith(image);
-      } else {
-        node.textContent = "VIDEO";
-      }
+function portfolioServiceId(index) {
+  const service = portfolioServices()[index];
+  return service ? String(service.id || index) : "";
+}
+
+function portfolioStoragePath(publicUrl) {
+  try {
+    const url = new URL(publicUrl);
+    const marker = `/storage/v1/object/public/${PORT_BUCKET}/`;
+    const index = url.pathname.indexOf(marker);
+    return index >= 0 ? decodeURIComponent(url.pathname.slice(index + marker.length)) : "";
+  } catch (_) {
+    return "";
+  }
+}
+
+async function refreshPortfolioList() {
+  const serviceIndex = Number($("portfolioService")?.value || 0);
+  const service = portfolioServices()[serviceIndex];
+  if (!service || !$("portfolioList")) return;
+  const onlineEntries = Array.isArray(service.gallery) ? service.gallery : [];
+  let localEntries = [];
+  try {
+    localEntries = (await portfolioAllLocal()).filter(item => item.serviceId === String(serviceIndex));
+  } catch (error) {
+    console.warn("Galeri lokal lama tidak dapat dibaca:", error);
+  }
+
+  const onlineHtml = onlineEntries.map((item, index) => `
+    <div class="manage-item">
+      <div class="media-row">
+        <div class="media-thumb">${item.kind === "video"
+          ? '<span>VIDEO</span>'
+          : `<img class="media-thumb-image" src="${esc(item.url || "")}" alt="${esc(item.title || "Dokumentasi")}" loading="lazy">`}</div>
+        <div style="flex:1;min-width:0"><strong>${esc(item.title || "Dokumentasi")}</strong><p>${esc(item.caption || "")} • ${item.kind === "video" ? "Video online" : "Foto online"}</p></div>
+        <button type="button" class="small-btn danger" data-delete-online-media="${index}">Hapus</button>
+      </div>
+    </div>`).join("");
+
+  const localHtml = localEntries.map(item => `
+    <div class="manage-item">
+      <div class="media-row">
+        <div class="media-thumb" data-local-thumb="${esc(item.id)}">${item.kind === "video" ? "VIDEO LOKAL" : "FOTO LOKAL"}</div>
+        <div style="flex:1;min-width:0"><strong>${esc(item.title || item.name || "Dokumentasi")}</strong><p>${esc(item.caption || "")} • Belum online</p></div>
+        <button type="button" class="small-btn" data-migrate-media="${esc(item.id)}">Pindahkan online</button>
+      </div>
+    </div>`).join("");
+
+  $("portfolioList").innerHTML =
+    (onlineHtml || "") + (localHtml || "") ||
+    "<p>Folder ini belum memiliki foto atau video.</p>";
+
+  for (const item of localEntries) {
+    const node = $("portfolioList").querySelector(`[data-local-thumb="${CSS.escape(String(item.id))}"]`);
+    if (node && item.kind === "image" && item.blob) {
+      const image = document.createElement("img");
+      image.className = "media-thumb-image";
+      image.alt = item.title || item.name || "Foto lokal";
+      image.src = URL.createObjectURL(item.blob);
+      node.replaceWith(image);
     }
   }
 }
 
 function fillPortfolioFolders() {
   const select = $("portfolioService");
+  if (!select) return;
   const previousValue = select.value;
   select.innerHTML = portfolioServices().map((service, index) =>
     `<option value="${index}">${esc(service.title)}</option>`
   ).join("");
   if (portfolioServices()[Number(previousValue)]) select.value = previousValue;
-  refreshPortfolioList().catch(() => toast("Tidak dapat membaca galeri di browser ini."));
+  refreshPortfolioList().catch(error => {
+    console.error(error);
+    toast("Tidak dapat membaca daftar galeri.");
+  });
 }
 
-$("portfolioService").addEventListener("change", () => refreshPortfolioList().catch(() => {}));
-$("portfolioFiles").addEventListener("change", () => {
-  $("portfolioFileName").textContent = [...$("portfolioFiles").files].map(file => file.name).join(", ") || "Belum memilih file";
-});
+async function uploadPortfolioFile(client, file, service, title, caption) {
+  const kind = file.type.startsWith("image/") ? "image" :
+    (file.type.startsWith("video/") ? "video" : "");
+  if (!kind) throw new Error(`${file.name}: format file tidak didukung.`);
+  if (file.size > 25 * 1024 * 1024) throw new Error(`${file.name}: ukuran melebihi 25 MB.`);
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+  const folder = String(service.id || slugify(service.title || "layanan"));
+  const path = `portfolio/${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName}`;
+  const { error } = await client.storage.from(PORT_BUCKET).upload(path, file, {
+    cacheControl: "3600",
+    upsert: false,
+    contentType: file.type
+  });
+  if (error) throw error;
+  const { data: publicData } = client.storage.from(PORT_BUCKET).getPublicUrl(path);
+  return {
+    id: `gallery-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    title: title || file.name,
+    caption: caption || "",
+    kind,
+    mime: file.type,
+    name: file.name,
+    url: publicData.publicUrl,
+    storagePath: path,
+    createdAt: new Date().toISOString()
+  };
+}
 
-$("addPortfolio").addEventListener("click", async () => {
-  const files = [...$("portfolioFiles").files];
-  const serviceIndex = Number($("portfolioService").value);
-  if (!files.length) return toast("Pilih foto atau video dahulu.");
-  if (!portfolioServices()[serviceIndex]) return toast("Tambahkan layanan terlebih dahulu.");
+if ($("portfolioService")) {
+  $("portfolioService").addEventListener("change", () => refreshPortfolioList().catch(() => {}));
+}
+if ($("portfolioFiles")) {
+  $("portfolioFiles").addEventListener("change", () => {
+    $("portfolioFileName").textContent = [...$("portfolioFiles").files].map(file => file.name).join(", ") || "Belum memilih file";
+  });
+}
 
-  try {
-    for (const file of files) {
-      if (file.size > 25 * 1024 * 1024) {
-        toast(file.name + " melebihi batas 25 MB.");
-        continue;
+if ($("addPortfolio")) {
+  $("addPortfolio").addEventListener("click", async () => {
+    const files = [...($("portfolioFiles")?.files || [])];
+    const serviceIndex = Number($("portfolioService")?.value || 0);
+    const service = portfolioServices()[serviceIndex];
+    if (!files.length) return toast("Pilih foto atau video dahulu.");
+    if (!service) return toast("Tambahkan layanan terlebih dahulu.");
+
+    const button = $("addPortfolio");
+    button.disabled = true;
+    try {
+      toast("Mengunggah media ke Supabase Storage...");
+      const client = await window.ngincengAuthReady;
+      service.gallery = Array.isArray(service.gallery) ? service.gallery : [];
+      for (const file of files) {
+        const item = await uploadPortfolioFile(
+          client, file, service,
+          $("mediaTitle")?.value.trim() || "",
+          $("mediaCaption")?.value.trim() || ""
+        );
+        service.gallery.push(item);
       }
-      const kind = file.type.startsWith("image/") ? "image" :
-        (file.type.startsWith("video/") ? "video" : "");
-      if (!kind) continue;
-      await portfolioPut({
-        id: "media-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
-        serviceId: String(serviceIndex),
-        title: $("mediaTitle").value.trim() || file.name,
-        caption: $("mediaCaption").value.trim(),
-        kind,
-        mime: file.type,
-        name: file.name,
-        blob: file,
-        createdAt: Date.now()
-      });
+      const saved = await save();
+      if (!saved) {
+        toast("File sudah terunggah, tetapi metadata belum tersimpan. Klik Simpan Semua Perubahan untuk mencoba lagi.");
+      } else {
+        toast("Foto/video berhasil disimpan online dan dapat dibuka dari perangkat lain.");
+      }
+      $("portfolioFiles").value = "";
+      $("portfolioFileName").textContent = "Belum memilih file";
+      $("mediaTitle").value = "";
+      $("mediaCaption").value = "";
+      await refreshPortfolioList();
+    } catch (error) {
+      console.error("Upload galeri online gagal:", error);
+      toast("Upload gagal: " + (error.message || "Periksa koneksi, format file, dan izin Storage."));
+    } finally {
+      button.disabled = false;
     }
-    $("portfolioFiles").value = "";
-    $("portfolioFileName").textContent = "Belum memilih file";
-    $("mediaTitle").value = "";
-    $("mediaCaption").value = "";
-    await refreshPortfolioList();
-    toast("Media berhasil ditambahkan ke galeri lokal browser ini.");
-  } catch (error) {
-    console.error(error);
-    toast("Penyimpanan browser tidak cukup atau tidak tersedia.");
-  }
-});
+  });
+}
 
 document.addEventListener("click", async event => {
-  const id = event.target.dataset.deleteMedia;
-  if (id && confirm("Hapus foto/video dari galeri?")) {
+  const deleteIndex = event.target.closest("[data-delete-online-media]")?.dataset.deleteOnlineMedia;
+  if (deleteIndex !== undefined) {
+    const serviceIndex = Number($("portfolioService")?.value || 0);
+    const service = portfolioServices()[serviceIndex];
+    const item = service?.gallery?.[Number(deleteIndex)];
+    if (!item || !confirm("Hapus media ini dari galeri online?")) return;
     try {
-      await portfolioDelete(id);
+      const client = await window.ngincengAuthReady;
+      const path = item.storagePath || portfolioStoragePath(item.url || "");
+      if (path) {
+        const { error } = await client.storage.from(PORT_BUCKET).remove([path]);
+        if (error) throw error;
+      }
+      service.gallery.splice(Number(deleteIndex), 1);
+      const saved = await save();
+      if (!saved) toast("Metadata penghapusan belum tersimpan. Klik Simpan Semua Perubahan.");
       await refreshPortfolioList();
-      toast("File dihapus dari galeri lokal.");
     } catch (error) {
-      toast("Gagal menghapus file galeri.");
+      console.error("Hapus media online gagal:", error);
+      toast("Gagal menghapus media: " + (error.message || "Periksa izin Storage."));
+    }
+    return;
+  }
+
+  const localId = event.target.closest("[data-migrate-media]")?.dataset.migrateMedia;
+  if (localId) {
+    const serviceIndex = Number($("portfolioService")?.value || 0);
+    const service = portfolioServices()[serviceIndex];
+    if (!service) return;
+    try {
+      const localItem = (await portfolioAllLocal()).find(item => String(item.id) === String(localId));
+      if (!localItem?.blob) return toast("File lokal tidak ditemukan di browser ini.");
+      const client = await window.ngincengAuthReady;
+      const file = new File([localItem.blob], localItem.name || `${localItem.title || "media"}`, { type: localItem.mime || localItem.blob.type });
+      const onlineItem = await uploadPortfolioFile(client, file, service, localItem.title || "", localItem.caption || "");
+      service.gallery = Array.isArray(service.gallery) ? service.gallery : [];
+      service.gallery.push(onlineItem);
+      const saved = await save();
+      if (!saved) {
+        service.gallery.pop();
+        toast("Penyimpanan data gagal. File lokal tetap aman; coba lagi.");
+        return;
+      }
+      await portfolioDeleteLocal(localItem.id);
+      await refreshPortfolioList();
+      toast("Media lama berhasil dipindahkan ke galeri online.");
+    } catch (error) {
+      console.error("Migrasi galeri lokal gagal:", error);
+      toast("Migrasi gagal: " + (error.message || "Periksa format dan izin Storage."));
     }
   }
 });
 
 async function initDashboard() {
-  // Tampilkan cadangan lokal terlebih dahulu agar formulir tidak kosong jika koneksi gagal.
   readLocalBackup();
   putFields();
   fillPortfolioFolders();
@@ -963,7 +1084,6 @@ async function initDashboard() {
     if (error) throw error;
 
     if (row) {
-      // Pertahankan cadangan lokal jika baris Supabase masih kosong.
       const localSettings = { ...cfg };
       const localContent = structuredClone(data);
       cfg = { ...defaults, ...localSettings, ...(row.settings || {}) };
