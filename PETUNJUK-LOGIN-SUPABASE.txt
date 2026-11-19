@@ -1,0 +1,28 @@
+LOGIN ADMIN NGINCENG MEDIA — PETUNJUK
+
+PAKET INI MENAMBAHKAN:
+- login email/password melalui Supabase Auth
+- pemeriksaan sesi sebelum dashboard ditampilkan
+- tombol logout
+- permintaan reset password dan halaman password baru
+
+LANGKAH PERSIAPAN (JANGAN MASUKKAN PASSWORD DI CHAT):
+1. Buat akun Supabase dan buat satu project.
+2. Buka Project Settings > API.
+3. Salin Project URL dan Publishable key (atau anon key lama).
+4. Buka supabase-config.js dan ganti:
+   ISI_PROJECT_URL_DI_SINI
+   ISI_PUBLISHABLE_KEY_DI_SINI
+   Jangan tempelkan Secret key atau service_role key ke website.
+5. Di Supabase Dashboard, buka Authentication > Users > Add user, buat akun admin dengan email kamu dan password yang kuat.
+6. Di Authentication > Settings / Providers, nonaktifkan "Allow new users to sign up" agar orang umum tidak dapat mendaftar sendiri. Pastikan email admin sudah dikonfirmasi/verified saat membuat user.
+7. Di Authentication > URL Configuration, tambahkan alamat lokal Live Server ke Redirect URLs, misalnya http://127.0.0.1:5500/** dan alamat website publik setelah hosting dipasang.
+8. Jalankan index.html lewat Live Server, lalu buka /login.html.
+9. Login dengan akun yang dibuat di Supabase. Setelah masuk, dashboard terbuka. Tombol Logout untuk keluar.
+
+CATATAN KEAMANAN PENTING:
+- Browser hanya boleh memakai Project URL + Publishable key. Jangan pernah masukkan Secret key/service_role key.
+- Login ini memverifikasi akun sungguhan dengan Supabase Auth, tetapi website saat ini masih versi statis dan konten/galeri masih disimpan lokal pada browser.
+- Penguncian halaman statis di sisi browser bukan pengganti otorisasi server. Sebelum website dipakai publik dengan data penting, kita perlu memindahkan data dan file ke database/storage Supabase serta mengaktifkan RLS/policy server-side.
+- Jangan kirim email/password atau secret key di chat. Jika perlu bantuan, kirim screenshot yang menutupi nilai kunci.
+- Paket website animasi awal tetap ada sebagai cadangan. Paket ini adalah folder tambahan dengan login.

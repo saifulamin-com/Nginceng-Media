@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login Admin — Nginceng Media</title>
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="login.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="login.js" defer></script>
+</head>
+<body class="login-page">
+<main class="login-card">
+  <a class="brand login-brand" href="index.html"><span class="brand-mark">N</span><span><b>NGINCENG MEDIA</b><small>ADMIN STUDIO</small></span></a>
+  <div class="login-heading"><h1>Selamat datang</h1><p>Masuk untuk mengelola website Nginceng Media.</p></div>
+  <form id="loginForm">
+    <label for="email">Email admin</label>
+    <input id="email" type="email" autocomplete="username" placeholder="emailkamu@contoh.com" required>
+    <label for="password">Password</label>
+    <div class="password-wrap"><input id="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required><button type="button" id="togglePassword">Lihat</button></div>
+    <button class="btn gold login-submit" id="loginButton" type="submit">MASUK DASHBOARD</button>
+    <p class="login-message" id="loginMessage" role="status"></p>
+  </form>
+  <button class="forgot" id="forgotPassword" type="button">Lupa password?</button>
+  <p class="login-foot">Akses khusus admin. Pembuatan akun dilakukan oleh pemilik proyek melalui panel Supabase.</p>
+</main>
+</body>
+</html>

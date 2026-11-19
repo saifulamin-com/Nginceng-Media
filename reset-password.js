@@ -1,0 +1,3 @@
+const client=window.supabase.createClient(window.NGINCENG_SUPABASE_URL,window.NGINCENG_SUPABASE_KEY);
+const form=document.getElementById("resetForm"),msg=document.getElementById("resetMessage");
+form.addEventListener("submit",async e=>{e.preventDefault();const password=document.getElementById("newPassword").value;if(password.length<8){msg.textContent="Gunakan minimal 8 karakter.";return}const {error}=await client.auth.updateUser({password});msg.textContent=error?"Belum berhasil. Buka kembali tautan pemulihan terbaru.":"Password berhasil diperbarui. Silakan login.";if(!error)setTimeout(()=>location.replace("login.html"),1800)});

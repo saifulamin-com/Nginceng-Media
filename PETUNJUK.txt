@@ -1,0 +1,31 @@
+NGINCENG MEDIA — PAKET WEBSITE MULTI-HALAMAN
+
+ISI FOLDER:
+- index.html       : halaman Home
+- edukasi.html     : daftar kategori edukasi
+- kategori.html    : daftar materi dalam kategori (menggunakan parameter URL)
+- materi.html      : halaman tutorial (menggunakan parameter URL)
+- artikel.html     : halaman artikel
+- youtube.html     : halaman YouTube
+- layanan.html     : halaman layanan
+- kontak.html      : halaman kontak
+- style.css        : desain dan tampilan
+- app.js           : navigasi dan konten halaman
+
+LANGKAH PEMASANGAN:
+1. Ekstrak ZIP ini.
+2. Salin semua file ke folder project website Nginceng Media.
+3. Buat folder bernama assets TIDAK diperlukan; letakkan gambar di folder utama.
+4. Letakkan logo PNG dengan nama persis: logo-nginceng.png
+5. Letakkan foto wallpaper dengan nama persis: foto-beranda.jpg
+6. Buka index.html melalui VS Code / Live Server.
+7. Coba menu Edukasi > pilih kategori > pilih materi.
+
+PENTING:
+- Website ini masih statis. Belum ada login admin atau database.
+- Untuk mengganti foto, ganti file foto-beranda.jpg dengan foto sendiri dan pertahankan nama file.
+- Untuk mengganti logo, ganti logo-nginceng.png dengan logo sendiri dan pertahankan nama file.
+- Ganti nomor 62XXXXXXXXXX di app.js dengan nomor WhatsApp tujuan.
+- Ganti tautan https://www.youtube.com/ di app.js dengan URL kanal YouTube Nginceng Media.
+- Untuk menambah kategori atau materi, edit data categories dan tutorials di app.js.
+- Jangan menghapus parameter ?topik= dan ?id= pada tautan kategori/materi.

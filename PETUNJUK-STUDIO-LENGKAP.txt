@@ -1,0 +1,22 @@
+NGINCENG MEDIA STUDIO — VERSI PENGELOLAAN LENGKAP
+
+PAKET INI:
+- Mempertahankan website multi-halaman dan animasi dari paket sebelumnya.
+- Menambahkan dashboard untuk identitas, warna/font, beranda, logo/wallpaper, kategori edukasi, artikel, YouTube, layanan, kontak, dan menu navigasi.
+- Pengaturan dan konten tersimpan di localStorage browser yang sama.
+
+CARA MENJALANKAN:
+1. Ekstrak ZIP ini ke folder baru bernama Nginceng-Media-Studio-Lengkap.
+2. Buka folder tersebut di VS Code.
+3. Klik kanan index.html > Open with Live Server.
+4. Buka alamat yang sama dan tambahkan /admin.html.
+   Contoh: http://127.0.0.1:5500/admin.html
+5. Atur bagian yang diperlukan lalu klik Simpan Semua Perubahan.
+6. Buka tab website dan tekan Ctrl+F5.
+
+PENTING:
+- Jangan hapus paket Nginceng-Media-Website-Multi-Halaman-Animasi.zip yang lama. Versi itu tetap menjadi cadangan.
+- Dashboard versi ini tetap lokal: belum ada login admin sungguhan, database online, upload ke hosting, atau sinkronisasi untuk pengunjung lain.
+- Data yang disimpan hanya tersedia pada browser/perangkat yang sama. Hindari membersihkan data situs/browser sebelum backup.
+- Kategori baru dapat ditambah dan diubah. Editor penambahan materi tutorial per kategori serta halaman login dan penyimpanan online akan dibuat di tahap berikutnya.
+- Gambar maksimal 1,5 MB per file untuk menjaga kapasitas penyimpanan browser.

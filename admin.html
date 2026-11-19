@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nginceng Media Studio</title><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="login.css">
+<style>body.auth-pending{visibility:hidden}</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="admin-auth.js" defer></script>
+<script src="admin.js" defer></script>
+</head>
+<body class="auth-pending">
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">N</span><span><b>NGINCENG MEDIA</b><small>STUDIO • VISUAL WEBSITE EDITOR</small></span></a><div class="top-actions"><a class="btn ghost" href="index.html" target="_blank">Lihat Website ↗</a><span id="adminEmail" style="color:#e8c77d;font-size:11px"></span><button class="btn ghost" id="logoutButton">Logout</button><button class="btn gold" id="saveTop">Simpan Semua</button></div></header>
+<main class="layout">
+<aside class="sidebar"><p class="side-label">PENGELOLAAN WEBSITE</p>
+<button class="tab active" data-tab="identity">◈ Identitas</button><button class="tab" data-tab="appearance">◐ Warna & Font</button><button class="tab" data-tab="home">⌂ Beranda</button><button class="tab" data-tab="media">▧ Logo & Wallpaper</button><button class="tab" data-tab="education">▤ Edukasi</button><button class="tab" data-tab="articles">▣ Artikel</button><button class="tab" data-tab="youtube">▶ YouTube</button><button class="tab" data-tab="services">◇ Layanan</button><button class="tab" data-tab="portfolio">▧ Galeri Layanan</button><button class="tab" data-tab="contact">✉ Kontak</button><button class="tab" data-tab="navigation">☷ Menu Navigasi</button>
+<div class="side-note"><b>Mode pemula</b><p>Semua pengaturan menggunakan kolom, tombol, dan pilihan. Tidak perlu menulis kode.</p></div><a class="back" href="index.html">← Kembali ke website</a></aside>
+<section class="editor">
+<div class="editor-heading"><div><p class="eyebrow">PANEL PENGATURAN</p><h1 id="panelTitle">Identitas Website</h1><p id="panelDesc">Atur identitas dan informasi utama website.</p></div><span class="status" id="status">Perubahan tersimpan lokal</span></div>
+
+<section class="panel active" id="panel-identity">
+<div class="field"><label>Nama website</label><input id="siteName"></div><div class="field"><label>Slogan</label><input id="tagline"></div>
+</section>
+<section class="panel" id="panel-appearance">
+<div class="field"><label>Warna utama / aksen</label><div class="color-line"><input type="color" id="gold"><span id="goldHex"></span></div></div>
+<div class="field"><label>Warna latar gelap</label><div class="color-line"><input type="color" id="black"><span id="blackHex"></span></div></div>
+<div class="field"><label>Warna latar halaman</label><div class="color-line"><input type="color" id="cream"><span id="creamHex"></span></div></div>
+<div class="field"><label>Jenis tulisan</label><select id="font"><option value="Arial, Helvetica, sans-serif">Modern (Arial)</option><option value="Georgia, serif">Klasik (Georgia)</option><option value="Verdana, sans-serif">Sederhana (Verdana)</option></select></div>
+</section>
+<section class="panel" id="panel-home"><div class="field"><label>Judul utama beranda</label><input id="heroTitle"></div><div class="field"><label>Deskripsi beranda</label><textarea id="heroText" rows="4"></textarea></div></section>
+<section class="panel" id="panel-media">
+<div class="upload-card"><div><b>Logo website</b><p>Pilih PNG, JPG, atau WebP.</p></div><label class="upload-btn">Pilih Logo<input type="file" id="logoFile" accept="image/*"></label><span id="logoName" class="file-name">Belum memilih file</span></div>
+<div class="upload-card"><div><b>Wallpaper beranda</b><p>Portrait maupun landscape bisa digunakan.</p></div><label class="upload-btn">Pilih Wallpaper<input type="file" id="wallFile" accept="image/*"></label><span id="wallName" class="file-name">Belum memilih file</span></div>
+<p class="tip">Untuk percobaan lokal, gambar disimpan di browser perangkat ini. Batas ukuran 1,5 MB per gambar.</p>
+</section>
+<section class="panel" id="panel-education">
+<h2>Kelola kategori edukasi</h2><div id="categoryList" class="manage-list"></div>
+<div class="subform"><h3>Tambah kategori</h3><div class="field"><label>Nama kategori</label><input id="newCatTitle" placeholder="Contoh: Lighting & Panggung"></div><div class="field"><label>Deskripsi</label><textarea id="newCatDesc" rows="2"></textarea></div><button class="btn gold" id="addCategory">Tambah Kategori</button></div>
+<p class="tip">Pilih kategori di daftar untuk mengedit judul/deskripsi atau menghapusnya. Materi tutorial awal tetap tersedia. Penambahan materi per kategori akan kita lengkapi pada tahap berikutnya.</p>
+</section>
+<section class="panel" id="panel-articles">
+<h2>Kelola artikel</h2><div id="articleList" class="manage-list"></div>
+<div class="subform"><h3>Tambah artikel</h3><div class="field"><label>Judul artikel</label><input id="newArticleTitle"></div><div class="field"><label>Ringkasan</label><textarea id="newArticleDesc" rows="2"></textarea></div><div class="field"><label>Isi singkat artikel</label><textarea id="newArticleBody" rows="4"></textarea></div><button class="btn gold" id="addArticle">Tambah Artikel</button></div>
+</section>
+<section class="panel" id="panel-youtube">
+<div class="field"><label>Judul halaman YouTube</label><input id="ytHeading"></div><div class="field"><label>Deskripsi</label><textarea id="ytDescription" rows="2"></textarea></div><div class="field"><label>Judul bagian video</label><input id="ytPanelTitle"></div><div class="field"><label>Keterangan</label><textarea id="ytPanelText" rows="2"></textarea></div><div class="field"><label>Link kanal atau video YouTube</label><input id="ytUrl" placeholder="https://www.youtube.com/@namakanal"></div></section>
+<section class="panel" id="panel-services"><h2>Kelola layanan</h2><div id="serviceList" class="manage-list"></div><div class="subform"><h3>Tambah layanan</h3><div class="field"><label>Nama layanan</label><input id="newServiceTitle"></div><div class="field"><label>Deskripsi layanan</label><textarea id="newServiceDesc" rows="2"></textarea></div><button class="btn gold" id="addService">Tambah Layanan</button></div></section>
+<section class="panel" id="panel-portfolio">
+<h2>Foto & Video Portofolio Layanan</h2>
+<p class="tip">Setiap layanan memiliki galeri sendiri. Pilih layanan, tambahkan foto/video, lalu simpan. Foto dan video disimpan lokal di browser laptop ini pada versi percobaan.</p>
+<div class="field"><label>Pilih folder layanan</label><select id="portfolioService"></select></div>
+<div class="field"><label>Judul foto / video</label><input id="mediaTitle" placeholder="Contoh: Live streaming acara masjid"></div>
+<div class="field"><label>Keterangan</label><textarea id="mediaCaption" rows="2" placeholder="Tulis keterangan singkat..."></textarea></div>
+<div class="upload-card"><b>Pilih foto atau video</b><p>Format gambar umum dan video MP4/WebM. Maksimal 25 MB per file untuk tahap uji coba.</p><label class="upload-btn">Pilih File<input type="file" id="portfolioFiles" accept="image/*,video/mp4,video/webm" multiple></label><span id="portfolioFileName" class="file-name">Belum memilih file</span></div>
+<button class="btn gold" id="addPortfolio">Tambah ke Galeri</button>
+<h3 style="margin-top:24px">Isi folder terpilih</h3><div id="portfolioList" class="manage-list"></div>
+</section>
+<section class="panel" id="panel-contact">
+<div class="field"><label>Judul halaman kontak</label><input id="contactHeading"></div><div class="field"><label>Deskripsi halaman</label><textarea id="contactDescription" rows="2"></textarea></div><div class="field"><label>Judul panel kontak</label><input id="contactPanelTitle"></div><div class="field"><label>Keterangan</label><textarea id="contactPanelText" rows="2"></textarea></div><div class="field"><label>Link WhatsApp lengkap</label><input id="whatsapp" placeholder="https://wa.me/62xxxxxxxxxx"></div><div class="field"><label>Email (opsional)</label><input id="email" type="email"></div></section>
+<section class="panel" id="panel-navigation"><h2>Atur menu website</h2><div id="navList" class="manage-list"></div><p class="tip">Centang menu yang ingin ditampilkan. Urutan menu mengikuti susunan yang sudah dibuat pada website.</p></section>
+<div class="bottom-actions"><button class="btn ghost" id="reset">Kembalikan Awal</button><button class="btn gold" id="saveBottom">Simpan Semua Perubahan</button></div>
+</section>
+<aside class="preview-wrap"><div class="preview-head"><b>PREVIEW</b><span>Contoh tampilan</span></div><div class="preview" id="preview"><div class="preview-nav"><div class="preview-brand"><div class="preview-logo" id="previewLogo">N</div><div><b id="pName">NGINCENG MEDIA</b><small id="pTag">EDUCATION • LIVE STREAMING • MULTIMEDIA</small></div></div></div><div class="preview-hero" id="previewHero"><span>EDUCATION • LIVE STREAMING • MULTIMEDIA</span><h2 id="pHeroTitle">WELCOME TO NGINCENG MEDIA</h2><p id="pHeroText">Tempat belajar teknologi multimedia dan live streaming.</p><button>MULAI BELAJAR</button></div><div class="preview-content"><b>Belajar & Berkarya</b><p>Contoh tampilan website Nginceng Media</p><div class="preview-cards"><i></i><i></i><i></i></div></div></div><p class="preview-help">Preview contoh. Simpan lalu refresh website untuk memeriksa perubahan.</p></aside>
+</main><div class="toast" id="toast" role="status"></div>
+</body></html>

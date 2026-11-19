@@ -1,0 +1,17 @@
+FITUR GALERI LAYANAN — PETUNJUK
+
+1. Buka dashboard melalui /admin.html.
+2. Klik menu Galeri Layanan.
+3. Pilih folder layanan yang sesuai.
+4. Isi judul dan keterangan.
+5. Pilih satu atau beberapa foto/video (MP4 atau WebM).
+6. Klik Tambah ke Galeri.
+7. Klik Simpan Semua Perubahan untuk menyimpan data layanan lainnya; galeri langsung tersimpan di IndexedDB browser.
+8. Buka halaman Layanan dan refresh untuk melihat galeri.
+
+CATATAN:
+- Galeri disimpan di IndexedDB pada browser dan komputer yang sama.
+- Batas file 25 MB per file untuk tahap percobaan.
+- File galeri belum diunggah ke server hosting, sehingga pengunjung umum belum dapat melihatnya dari perangkat lain.
+- Setelah galeri lokal berhasil diuji, tahap berikutnya adalah membuat penyimpanan online agar foto/video dapat tampil untuk semua pengunjung.
+- Jangan hapus data situs/browser karena dapat menghapus penyimpanan lokal.
