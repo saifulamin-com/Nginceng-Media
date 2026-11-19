@@ -449,7 +449,7 @@ function renderServices() {
   const selectedId = params.get("layanan");
   const selected = selectedId ? services.find((service, index) => (service.id || String(index)) === selectedId) : null;
   if (selected) {
-    const packages = (selected.packages || []).map((item, index) => `<div class="card service-package"><div class="card-number">${String(index+1).padStart(2,"0")}</div><h3>${item.title}</h3><p>${item.desc || ""}</p>${item.price ? `<strong class="service-price">${item.price}</strong>` : ""}</div>`).join("");
+    const packages = (selected.packages || []).map((item, index) => `<div class="card service-package" tabindex="0" role="button" aria-label="Lihat detail ${item.title}" data-package-detail><div class="card-number">${String(index+1).padStart(2,"0")}</div><h3>${item.title}</h3><p>${item.desc || ""}</p>${item.price ? `<strong class="service-price">${item.price}</strong>` : ""}<span class="card-link">LIHAT DETAIL →</span></div>`).join("");
     const gallery = (selected.gallery || []).map(item => `<figure class="service-media-card"><img src="${item.url}" alt="${item.title || selected.title}" loading="lazy"><figcaption><strong>${item.title || "Dokumentasi"}</strong><small>${item.caption || ""}</small></figcaption></figure>`).join("");
     app.innerHTML = `<section class="page-hero"><h1>${selected.title}</h1><p>${selected.desc || "Informasi layanan Nginceng Media."}</p></section><section class="section section-light"><div class="container"><a class="back-link" href="layanan.html">← Kembali ke semua layanan</a>${packages ? `<div class="section-title"><h2>Pilihan Paket</h2><p>Pilih paket sesuai kebutuhan kegiatan.</p></div><div class="grid">${packages}</div>` : `<div class="callout">Informasi paket layanan akan segera ditambahkan.</div>`}${gallery ? `<div class="section-title" style="margin-top:48px"><h2>Galeri Layanan</h2><p>Dokumentasi pekerjaan dan kegiatan.</p></div><div class="service-gallery-grid">${gallery}</div>` : ""}</div></section>`;
     return;
@@ -627,7 +627,64 @@ if (mainContent) {
     closeButton.focus();
   }
 
+  function closePackageDetail(){
+    const modal = document.querySelector(".nginceng-package-modal");
+    if (modal) modal.remove();
+    document.removeEventListener("keydown", onPackageKeyDown);
+  }
+
+  function onPackageKeyDown(event){
+    if (event.key === "Escape") closePackageDetail();
+  }
+
+  function openPackageDetail(card){
+    closePackageDetail();
+    const modal = document.createElement("div");
+    modal.className = "nginceng-package-modal";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", "Detail paket layanan");
+
+    const panel = document.createElement("section");
+    panel.className = "nginceng-package-panel";
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "nginceng-package-close";
+    close.setAttribute("aria-label", "Tutup detail paket");
+    close.textContent = "×";
+
+    const number = document.createElement("div");
+    number.className = "card-number";
+    number.textContent = card.querySelector(".card-number")?.textContent || "";
+    const title = document.createElement("h2");
+    title.textContent = card.querySelector("h3")?.textContent || "Detail Paket";
+    const desc = document.createElement("p");
+    desc.textContent = card.querySelector("p")?.textContent || "Informasi paket layanan.";
+    const price = document.createElement("strong");
+    price.className = "nginceng-package-price";
+    price.textContent = card.querySelector(".service-price")?.textContent || "Hubungi kami untuk informasi harga";
+    const note = document.createElement("p");
+    note.className = "nginceng-package-note";
+    note.textContent = "Hubungi Nginceng Media untuk informasi dan pemesanan paket ini.";
+
+    close.addEventListener("click", closePackageDetail);
+    modal.addEventListener("click", event => {
+      if (event.target === modal) closePackageDetail();
+    });
+    panel.append(close, number, title, desc, price, note);
+    modal.appendChild(panel);
+    document.body.appendChild(modal);
+    document.addEventListener("keydown", onPackageKeyDown);
+    close.focus();
+  }
+
   appRoot.addEventListener("click", event => {
+    const packageCard = event.target.closest("[data-package-detail]");
+    if (packageCard) {
+      event.preventDefault();
+      openPackageDetail(packageCard);
+      return;
+    }
     const photo = event.target.closest(".service-media-card img");
     if (!photo) return;
     event.preventDefault();
@@ -635,6 +692,12 @@ if (mainContent) {
   });
 
   appRoot.addEventListener("keydown", event => {
+    const packageCard = event.target.closest("[data-package-detail]");
+    if (packageCard && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openPackageDetail(packageCard);
+      return;
+    }
     const photo = event.target.closest(".service-media-card img");
     if (photo && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();

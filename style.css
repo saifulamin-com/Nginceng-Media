@@ -265,3 +265,29 @@ body {
   .nginceng-lightbox{padding:58px 10px 18px}
   .nginceng-lightbox-image{max-width:96vw;max-height:calc(100vh - 115px)}
 }
+
+
+/* ===== DETAIL PAKET LAYANAN: MODAL ===== */
+.service-package{cursor:pointer;position:relative}
+.service-package:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.service-package .card-link{display:inline-block}
+.nginceng-package-modal{
+  position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(5px);
+}
+.nginceng-package-panel{
+  position:relative;width:min(620px,94vw);max-height:88vh;overflow:auto;
+  padding:clamp(26px,5vw,46px);border:1px solid #765a2a;border-radius:16px;
+  background:linear-gradient(145deg,#191919,#302313);color:#fff;
+  box-shadow:0 18px 60px rgba(0,0,0,.45);
+}
+.nginceng-package-panel .card-number{color:var(--gold-light);font-size:30px}
+.nginceng-package-panel h2{margin:8px 48px 16px 0;color:var(--gold-light);font-size:clamp(25px,5vw,36px);line-height:1.2}
+.nginceng-package-panel>p{color:#eee;font-size:16px;line-height:1.7}
+.nginceng-package-price{display:block;margin:22px 0;color:#fff;font-size:clamp(21px,4vw,29px)}
+.nginceng-package-note{padding-top:16px;border-top:1px solid rgba(232,199,125,.3);font-size:13px!important;color:#d7c9ad!important}
+.nginceng-package-close{
+  position:absolute;top:12px;right:14px;width:42px;height:42px;border:1px solid #9a7a43;
+  border-radius:50%;background:#111;color:#fff;font-size:30px;line-height:1;cursor:pointer;
+}
+@media(max-width:560px){.nginceng-package-panel{padding:28px 22px}.nginceng-package-panel>p{font-size:14px}}
