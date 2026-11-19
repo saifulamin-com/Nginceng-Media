@@ -292,6 +292,14 @@ const tutorials = {
     Object.keys(tutorials).forEach(k => delete tutorials[k]);
     Object.assign(tutorials, studioContent.tutorials);
   }
+  // Susun daftar materi kategori dari data tutorial online, sambil mempertahankan materi bawaan.
+  Object.entries(categories).forEach(([categoryId, category]) => {
+    const dynamicMaterials = Object.entries(tutorials)
+      .filter(([, item]) => item.categoryId === categoryId)
+      .map(([id, item]) => ({ id, title: item.title, desc: item.intro || "" }));
+    if (dynamicMaterials.length) category.materials = dynamicMaterials;
+    else if (!Array.isArray(category.materials)) category.materials = [];
+  });
 
 const header = `
 <header class="site-header">
@@ -393,17 +401,19 @@ function renderMaterial() {
   const id = params.get("id") || "vmix-dasar";
   const item = tutorials[id];
   if (!item) { app.innerHTML = `<section class="section"><div class="container"><h1>Materi belum tersedia</h1><a href="edukasi.html" class="back-link">← Kembali ke Edukasi</a></div></section>`; return; }
-  const sections = item.sections.map((s,i)=>`<h2>${i+1}. ${s[0]}</h2><p>${s[1]}</p>`).join("");
+  const sections = (item.sections || []).map((s,i)=>`<h2>${i+1}. ${s[0]}</h2><p>${s[1]}</p>`).join("");
+  const body = item.body ? String(item.body).split(/\n\s*\n/).map(paragraph => `<p>${paragraph.replace(/\n/g,"<br>")}</p>`).join("") : "";
+  const image = item.image ? `<figure class="education-material-image"><img src="${item.image}" alt="Ilustrasi ${item.title || "materi edukasi"}" loading="lazy"></figure>` : "";
   app.innerHTML = `
-    <section class="page-hero"><h1>Tutorial & Materi</h1><p>${item.category}</p></section>
+    <section class="page-hero"><h1>Tutorial & Materi</h1><p>${item.category || "Nginceng Media"}</p></section>
     <section class="section section-light"><div class="container">
       <article class="article-body reveal">
-        <a class="back-link" href="kategori.html?topik=${item.categoryId}">← Kembali ke ${item.category}</a>
+        <a class="back-link" href="kategori.html?topik=${item.categoryId}">← Kembali ke ${item.category || "kategori"}</a>
         <div class="article-category">MATERI EDUKASI • NGINCENG MEDIA</div>
         <h1>${item.title}</h1>
-        <p>${item.intro}</p>
-        ${sections}
-        <div class="callout"><strong>Catatan:</strong> Materi ini merupakan pengantar. Materi dapat dikembangkan dengan gambar, video, dan contoh praktik pada pembaruan berikutnya.</div>
+        <p>${item.intro || ""}</p>
+        ${image}
+        ${body || sections}
         <a class="btn" href="kategori.html?topik=${item.categoryId}">KEMBALI KE DAFTAR MATERI</a>
       </article>
     </div></section>`;
@@ -435,15 +445,19 @@ function renderYoutube() {
 }
 
 function renderServices() {
-  const services = studioContent.services || [
-    {title:"Live Streaming",desc:"Produksi siaran langsung untuk kegiatan dan acara."},
-    {title:"Dokumentasi Acara",desc:"Dokumentasi foto dan video untuk kebutuhan publikasi."},
-    {title:"Multimedia",desc:"Dukungan kebutuhan visual dan multimedia acara."}
-  ];
+  const services = studioContent.services || [];
+  const selectedId = params.get("layanan");
+  const selected = selectedId ? services.find((service, index) => (service.id || String(index)) === selectedId) : null;
+  if (selected) {
+    const packages = (selected.packages || []).map((item, index) => `<div class="card service-package"><div class="card-number">${String(index+1).padStart(2,"0")}</div><h3>${item.title}</h3><p>${item.desc || ""}</p>${item.price ? `<strong class="service-price">${item.price}</strong>` : ""}</div>`).join("");
+    const gallery = (selected.gallery || []).map(item => `<figure class="service-media-card"><img src="${item.url}" alt="${item.title || selected.title}" loading="lazy"><figcaption><strong>${item.title || "Dokumentasi"}</strong><small>${item.caption || ""}</small></figcaption></figure>`).join("");
+    app.innerHTML = `<section class="page-hero"><h1>${selected.title}</h1><p>${selected.desc || "Informasi layanan Nginceng Media."}</p></section><section class="section section-light"><div class="container"><a class="back-link" href="layanan.html">← Kembali ke semua layanan</a>${packages ? `<div class="section-title"><h2>Pilihan Paket</h2><p>Pilih paket sesuai kebutuhan kegiatan.</p></div><div class="grid">${packages}</div>` : `<div class="callout">Informasi paket layanan akan segera ditambahkan.</div>`}${gallery ? `<div class="section-title" style="margin-top:48px"><h2>Galeri Layanan</h2><p>Dokumentasi pekerjaan dan kegiatan.</p></div><div class="service-gallery-grid">${gallery}</div>` : ""}</div></section>`;
+    return;
+  }
   app.innerHTML = `
     <section class="page-hero"><h1>${studioConfig.serviceHeading || "Layanan Multimedia"}</h1><p>${studioConfig.serviceIntro || "Dukungan produksi dan dokumentasi untuk kebutuhan acara."}</p></section>
     <section class="section section-light"><div class="container"><div class="grid">
-      ${services.map((s,i)=>`<div class="card"><div class="card-number">${String(i+1).padStart(2,"0")}</div><h3>${s.title}</h3><p>${s.desc}</p></div>`).join("")}
+      ${services.map((s,i)=>`<a class="card" href="layanan.html?layanan=${encodeURIComponent(s.id || String(i))}"><div class="card-number">${String(i+1).padStart(2,"0")}</div><h3>${s.title}</h3><p>${s.desc || ""}</p><span class="card-link">LIHAT PAKET & DETAIL →</span></a>`).join("")}
     </div></div></section>`;
 }
 
@@ -552,36 +566,6 @@ if (mainContent) {
 })();
 
 
-/* Tampilkan foto/video portofolio layanan dari IndexedDB pada halaman publik. */
-(async function renderServicePortfolio(){
- if(document.body.dataset.page!=="layanan") return;
- const container=document.querySelector(".section .container .grid");
- if(!container) return;
- try{
-  const request=indexedDB.open("ngincengMediaPortfolio",1);
-  const db=await new Promise((resolve,reject)=>{request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains("assets"))request.result.createObjectStore("assets",{keyPath:"id"})};request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error)});
-  const items=await new Promise((resolve,reject)=>{const tx=db.transaction("assets","readonly");const r=tx.objectStore("assets").getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)});
-  const serviceCards=[...container.children];
-  for(let i=0;i<serviceCards.length;i++){
-    const gallery=items.filter(x=>x.serviceId===String(i));
-    if(!gallery.length)continue;
-    const section=document.createElement("div");section.className="service-gallery";
-    section.innerHTML='<h4>Galeri Portofolio</h4><div class="service-gallery-grid"></div>';
-    const grid=section.querySelector(".service-gallery-grid");
-    gallery.forEach(item=>{
-      const card=document.createElement("figure");card.className="service-media-card";
-      const url=URL.createObjectURL(item.blob);
-      let media;
-      if(item.kind==="video"){media=document.createElement("video");media.controls=true;media.preload="metadata";media.src=url}
-      else{media=document.createElement("img");media.loading="lazy";media.src=url;media.alt=item.title}
-      const caption=document.createElement("figcaption");
-      const strong=document.createElement("strong");strong.textContent=item.title;
-      const small=document.createElement("small");small.textContent=item.caption||"";
-      caption.append(strong,small);card.append(media,caption);grid.append(card);
-    });
-    serviceCards[i].append(section);
-  }
- }catch(e){console.warn("Galeri layanan belum tersedia",e)}
-})();
+/* Galeri layanan kini dibaca dari metadata Supabase dan URL publik Supabase Storage. */
 
 })();
