@@ -16,7 +16,8 @@ const defaults = {
   heroTitle: "WELCOME TO NGINCENG MEDIA",
   heroText: "Tempat belajar teknologi multimedia, live streaming, audio engineering, video production, dan dokumentasi digital.",
   logo: "",
-  wallpaper: ""
+  wallpaper: "",
+  favicon: ""
 };
 
 const starter = {
@@ -279,6 +280,7 @@ function putFields() {
   $("email").value = data.contact.email || "";
 
   renderLists();
+  if ($("faviconName")) $("faviconName").textContent = cfg.favicon ? "Favicon sudah tersimpan" : "Belum memilih file";
   refresh();
 }
 
@@ -297,6 +299,7 @@ function refresh() {
   $("previewHero").style.backgroundSize = "cover";
   $("previewLogo").innerHTML = cfg.logo ? `<img src="${cfg.logo}" alt="Logo">` : "N";
   $("previewLogo").style.background = cfg.gold;
+  if ($("faviconName") && cfg.favicon && $("faviconName").textContent === "Belum memilih file") $("faviconName").textContent = "Favicon sudah tersimpan";
   $("previewHero").querySelector("button").style.background = cfg.gold;
 }
 
@@ -748,67 +751,49 @@ document.querySelectorAll(".tab").forEach(button => {
   };
 });
 
-function imageUpload(inputId, key, labelId) {
+async function uploadBrandAsset(inputId, key, labelId, folder, fallbackLabel) {
   const input = $(inputId);
-  if (!input) return;
-
-  input.onchange = async () => {
-    const file = input.files?.[0];
-    if (!file) return;
-
-    // Bucket nginceng-media saat ini menerima JPEG, PNG, WebP, dan GIF.
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-    const maxSize = 50 * 1024 * 1024;
-    if (!allowedTypes.includes(file.type)) {
-      toast("Format gambar harus JPG, PNG, WebP, atau GIF.");
-      input.value = "";
-      return;
-    }
-    if (file.size > maxSize) {
-      toast("Ukuran gambar maksimal 50 MB sesuai pengaturan Supabase Storage.");
-      input.value = "";
-      return;
-    }
-
-    const label = $(labelId);
-    const previousLabel = label?.textContent || "";
-    if (label) label.textContent = "Mengunggah ke Supabase...";
-    input.disabled = true;
-
-    try {
-      const client = await window.ngincengAuthReady;
-      const extension = (file.name.split(".").pop() || "img").toLowerCase().replace(/[^a-z0-9]/g, "") || "img";
-      const path = `branding/${key}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
-      const { error } = await client.storage
-        .from("nginceng-media")
-        .upload(path, file, {
-          cacheControl: "3600",
-          upsert: false,
-          contentType: file.type
-        });
-      if (error) throw error;
-
-      const { data: publicData } = client.storage.from("nginceng-media").getPublicUrl(path);
-      if (!publicData?.publicUrl) throw new Error("URL publik gambar tidak berhasil dibuat.");
-
-      // Simpan URL publik, bukan DataURL/base64, di pengaturan website.
-      cfg[key] = publicData.publicUrl;
-      if (label) label.textContent = file.name + " (terunggah)";
-      refresh();
-      toast("Gambar berhasil diunggah ke Supabase. Klik Simpan Semua agar URL tersimpan di pengaturan website.");
-    } catch (error) {
-      console.error("Upload logo/wallpaper gagal:", error);
-      if (label) label.textContent = previousLabel;
-      toast("Upload gagal: " + (error.message || "Periksa login, koneksi, dan kebijakan Storage."));
-    } finally {
-      input.disabled = false;
-      input.value = "";
-    }
-  };
+  const file = input?.files?.[0];
+  if (!file) return;
+  const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/x-icon", "image/vnd.microsoft.icon"];
+  if (!allowed.includes(file.type) && !/\.(png|jpe?g|webp|gif|ico)$/i.test(file.name)) {
+    toast("Format gambar harus PNG, JPG, WebP, GIF, atau ICO.");
+    input.value = "";
+    return;
+  }
+  if (file.size > 50 * 1024 * 1024) {
+    toast("Ukuran maksimal 50 MB per file.");
+    input.value = "";
+    return;
+  }
+  try {
+    toast("Mengunggah gambar ke Supabase Storage...");
+    const client = await window.ngincengAuthReady;
+    const ext = (file.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
+    const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await client.storage.from("nginceng-media").upload(path, file, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: file.type || "image/png"
+    });
+    if (error) throw error;
+    const { data: publicData } = client.storage.from("nginceng-media").getPublicUrl(path);
+    cfg[key] = publicData.publicUrl;
+    if ($(labelId)) $(labelId).textContent = file.name;
+    refresh();
+    toast(`${fallbackLabel} berhasil diunggah. Klik Simpan Semua untuk menerapkan.`);
+  } catch (error) {
+    console.error(`Upload ${fallbackLabel} gagal:`, error);
+    toast("Upload gagal: " + (error.message || "Periksa login dan kebijakan Supabase Storage."));
+  } finally {
+    input.value = "";
+  }
 }
 
-imageUpload("logoFile", "logo", "logoName");
-imageUpload("wallFile", "wallpaper", "wallName");
+$("logoFile").onchange = () => uploadBrandAsset("logoFile", "logo", "logoName", "branding/logo", "Logo");
+$("wallFile").onchange = () => uploadBrandAsset("wallFile", "wallpaper", "wallName", "branding/wallpaper", "Wallpaper");
+$("faviconFile").onchange = () => uploadBrandAsset("faviconFile", "favicon", "faviconName", "branding/favicon", "Favicon");
+
 $("saveTop").onclick = save;
 $("saveBottom").onclick = save;
 
