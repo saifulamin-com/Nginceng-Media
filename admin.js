@@ -749,21 +749,61 @@ document.querySelectorAll(".tab").forEach(button => {
 });
 
 function imageUpload(inputId, key, labelId) {
-  $(inputId).onchange = () => {
-    const file = $(inputId).files[0];
+  const input = $(inputId);
+  if (!input) return;
+
+  input.onchange = async () => {
+    const file = input.files?.[0];
     if (!file) return;
-    if (file.size > 1500000) {
-      toast("Gambar maksimal 1,5 MB. Kompres gambar dahulu.");
-      $(inputId).value = "";
+
+    // Bucket nginceng-media saat ini menerima JPEG, PNG, WebP, dan GIF.
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const maxSize = 50 * 1024 * 1024;
+    if (!allowedTypes.includes(file.type)) {
+      toast("Format gambar harus JPG, PNG, WebP, atau GIF.");
+      input.value = "";
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      cfg[key] = reader.result;
-      $(labelId).textContent = file.name;
+    if (file.size > maxSize) {
+      toast("Ukuran gambar maksimal 50 MB sesuai pengaturan Supabase Storage.");
+      input.value = "";
+      return;
+    }
+
+    const label = $(labelId);
+    const previousLabel = label?.textContent || "";
+    if (label) label.textContent = "Mengunggah ke Supabase...";
+    input.disabled = true;
+
+    try {
+      const client = await window.ngincengAuthReady;
+      const extension = (file.name.split(".").pop() || "img").toLowerCase().replace(/[^a-z0-9]/g, "") || "img";
+      const path = `branding/${key}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
+      const { error } = await client.storage
+        .from("nginceng-media")
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
+        });
+      if (error) throw error;
+
+      const { data: publicData } = client.storage.from("nginceng-media").getPublicUrl(path);
+      if (!publicData?.publicUrl) throw new Error("URL publik gambar tidak berhasil dibuat.");
+
+      // Simpan URL publik, bukan DataURL/base64, di pengaturan website.
+      cfg[key] = publicData.publicUrl;
+      if (label) label.textContent = file.name + " (terunggah)";
       refresh();
-    };
-    reader.readAsDataURL(file);
+      toast("Gambar berhasil diunggah ke Supabase. Klik Simpan Semua agar URL tersimpan di pengaturan website.");
+    } catch (error) {
+      console.error("Upload logo/wallpaper gagal:", error);
+      if (label) label.textContent = previousLabel;
+      toast("Upload gagal: " + (error.message || "Periksa login, koneksi, dan kebijakan Storage."));
+    } finally {
+      input.disabled = false;
+      input.value = "";
+    }
   };
 }
 
