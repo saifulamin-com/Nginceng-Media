@@ -289,14 +289,13 @@ const tutorials = {
     Object.assign(categories, studioContent.categories);
   }
   if (studioContent.tutorials) {
-    Object.keys(tutorials).forEach(k => delete tutorials[k]);
     Object.assign(tutorials, studioContent.tutorials);
   }
   // Susun daftar materi kategori dari data tutorial online, sambil mempertahankan materi bawaan.
   Object.entries(categories).forEach(([categoryId, category]) => {
     const dynamicMaterials = Object.entries(tutorials)
       .filter(([, item]) => item.categoryId === categoryId)
-      .map(([id, item]) => ({ id, title: item.title, desc: item.intro || "" }));
+      .map(([id, item]) => ({ id, title: item.title, desc: item.desc || item.intro || "" }));
     if (dynamicMaterials.length) category.materials = dynamicMaterials;
     else if (!Array.isArray(category.materials)) category.materials = [];
   });
@@ -401,20 +400,25 @@ function renderMaterial() {
   const id = params.get("id") || "vmix-dasar";
   const item = tutorials[id];
   if (!item) { app.innerHTML = `<section class="section"><div class="container"><h1>Materi belum tersedia</h1><a href="edukasi.html" class="back-link">← Kembali ke Edukasi</a></div></section>`; return; }
-  const sections = (item.sections || []).map((s,i)=>`<h2>${i+1}. ${s[0]}</h2><p>${s[1]}</p>`).join("");
-  const body = item.body ? String(item.body).split(/\n\s*\n/).map(paragraph => `<p>${paragraph.replace(/\n/g,"<br>")}</p>`).join("") : "";
-  const image = item.image ? `<figure class="education-material-image"><img src="${item.image}" alt="Ilustrasi ${item.title || "materi edukasi"}" loading="lazy"></figure>` : "";
+  const safe = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[ch]));
+  const renderBody = value => String(value || "").split(/\[\[image:(https?:\/\/[^\]]+)\]\]/g).map((part, index) => {
+    if (index % 2 === 1) return `<figure class="education-material-image"><img src="${safe(part)}" alt="Ilustrasi ${safe(item.title)}" loading="lazy"></figure>`;
+    return part.split(/\n\s*\n/).filter(paragraph => paragraph.trim()).map(paragraph => `<p>${safe(paragraph).replace(/\n/g,"<br>")}</p>`).join("");
+  }).join("");
+  const sections = (item.sections || []).map((section,index)=>`<h2>${index+1}. ${safe(section[0])}</h2><p>${safe(section[1])}</p>`).join("");
+  const body = item.body ? renderBody(item.body) : sections;
+  const image = item.image ? `<figure class="education-material-image"><img src="${safe(item.image)}" alt="Ilustrasi ${safe(item.title || "materi edukasi")}" loading="lazy"></figure>` : "";
   app.innerHTML = `
-    <section class="page-hero"><h1>Tutorial & Materi</h1><p>${item.category || "Nginceng Media"}</p></section>
+    <section class="page-hero"><h1>Tutorial & Materi</h1><p>${safe(item.category || "Nginceng Media")}</p></section>
     <section class="section section-light"><div class="container">
       <article class="article-body reveal">
-        <a class="back-link" href="kategori.html?topik=${item.categoryId}">← Kembali ke ${item.category || "kategori"}</a>
+        <a class="back-link" href="kategori.html?topik=${encodeURIComponent(item.categoryId || "")}">← Kembali ke ${safe(item.category || "kategori")}</a>
         <div class="article-category">MATERI EDUKASI • NGINCENG MEDIA</div>
-        <h1>${item.title}</h1>
-        <p>${item.intro || ""}</p>
+        <h1>${safe(item.title)}</h1>
+        <p>${safe(item.intro || "")}</p>
         ${image}
-        ${body || sections}
-        <a class="btn" href="kategori.html?topik=${item.categoryId}">KEMBALI KE DAFTAR MATERI</a>
+        ${body}
+        <a class="btn" href="kategori.html?topik=${encodeURIComponent(item.categoryId || "")}">KEMBALI KE DAFTAR MATERI</a>
       </article>
     </div></section>`;
 }
@@ -428,7 +432,7 @@ function renderArticles() {
   app.innerHTML = `
     <section class="page-hero"><h1>${studioConfig.articleHeading || "Artikel & Tutorial"}</h1><p>${studioConfig.articleIntro || "Pengetahuan dan catatan seputar dunia multimedia."}</p></section>
     <section class="section section-white"><div class="container"><div class="grid">
-      ${articles.map((a,i)=>`<article class="card"><div class="card-number">${String(i+1).padStart(2,"0")}</div><h3>${a.title}</h3><p>${a.desc}</p><p>${a.body || ""}</p>${a.url ? `<a class="card-link" href="${a.url}">BACA SELENGKAPNYA →</a>` : ""}</article>`).join("")}
+      ${articles.map((a,i)=>`<article class="card"><div class="card-number">${String(i+1).padStart(2,"0")}</div><h3>${String(a.title || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]))}</h3><p>${String(a.desc || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c]))}</p><p>${String(a.body || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"}[c])).replace(/\n/g,"<br>")}</p>${a.url ? `<a class="card-link" href="${a.url}">BACA SELENGKAPNYA →</a>` : ""}</article>`).join("")}
     </div></div></section>`;
 }
 

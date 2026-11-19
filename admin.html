@@ -36,11 +36,21 @@
 <section class="panel" id="panel-education">
 <h2>Kelola kategori edukasi</h2><div id="categoryList" class="manage-list"></div>
 <div class="subform"><h3>Tambah kategori</h3><div class="field"><label>Nama kategori</label><input id="newCatTitle" placeholder="Contoh: Lighting & Panggung"></div><div class="field"><label>Deskripsi</label><textarea id="newCatDesc" rows="2"></textarea></div><button class="btn gold" id="addCategory">Tambah Kategori</button></div>
-<p class="tip">Pilih kategori di daftar untuk mengedit judul/deskripsi atau menghapusnya. Materi tutorial awal tetap tersedia. Penambahan materi per kategori akan kita lengkapi pada tahap berikutnya.</p>
+<p class="tip">Kategori dan materi dikelola di sini. Perubahan baru tersimpan online setelah menekan tombol Simpan Semua.</p>
+<div class="subform education-editor"><h3>Kelola materi tutorial</h3>
+<div class="field"><label>Pilih kategori</label><select id="materialCategory"></select></div>
+<div class="field"><label>Pilih materi untuk diedit</label><select id="materialSelect"><option value="">Pilih materi</option></select></div>
+<div class="field"><label>Judul materi</label><input id="materialTitle" placeholder="Judul materi"></div>
+<div class="field"><label>Deskripsi singkat materi</label><textarea id="materialDesc" rows="2" placeholder="Deskripsi yang tampil di daftar materi"></textarea></div>
+<div class="field"><label>Pengantar materi</label><textarea id="materialIntro" rows="3"></textarea></div>
+<div class="field"><label>Isi tutorial</label><textarea id="materialBody" rows="10" placeholder="Pisahkan paragraf dengan satu baris kosong. Untuk gambar, unggah gambar lalu sisipkan penanda pada posisi kursor."></textarea></div>
+<div class="field"><label>Gambar tutorial</label><input type="file" id="materialImageFile" accept="image/png,image/jpeg,image/webp,image/gif"><button type="button" class="btn" id="uploadMaterialImage">Unggah & sisipkan gambar</button><p class="tip">Gambar diunggah ke Supabase Storage. Penanda gambar akan disisipkan pada isi tutorial.</p></div>
+<div class="manage-actions"><button type="button" class="btn gold" id="newMaterial">Materi Baru</button><button type="button" class="btn gold" id="saveMaterial">Simpan Materi</button><button type="button" class="small-btn danger" id="deleteMaterial">Hapus Materi</button></div>
+</div>
 </section>
 <section class="panel" id="panel-articles">
 <h2>Kelola artikel</h2><div id="articleList" class="manage-list"></div>
-<div class="subform"><h3>Tambah artikel</h3><div class="field"><label>Judul artikel</label><input id="newArticleTitle"></div><div class="field"><label>Ringkasan</label><textarea id="newArticleDesc" rows="2"></textarea></div><div class="field"><label>Isi singkat artikel</label><textarea id="newArticleBody" rows="4"></textarea></div><button class="btn gold" id="addArticle">Tambah Artikel</button></div>
+<div class="subform"><h3>Tambah artikel</h3><div class="field"><label>Judul artikel</label><input id="newArticleTitle"></div><div class="field"><label>Ringkasan</label><textarea id="newArticleDesc" rows="2"></textarea></div><div class="field"><label>Isi artikel lengkap</label><textarea id="newArticleBody" rows="7" placeholder="Tulis isi artikel. Pisahkan paragraf dengan baris kosong."></textarea></div><button class="btn gold" id="addArticle">Tambah Artikel</button></div>
 </section>
 <section class="panel" id="panel-youtube">
 <div class="field"><label>Judul halaman YouTube</label><input id="ytHeading"></div><div class="field"><label>Deskripsi</label><textarea id="ytDescription" rows="2"></textarea></div><div class="field"><label>Judul bagian video</label><input id="ytPanelTitle"></div><div class="field"><label>Keterangan</label><textarea id="ytPanelText" rows="2"></textarea></div><div class="field"><label>Link kanal atau video YouTube</label><input id="ytUrl" placeholder="https://www.youtube.com/@namakanal"></div></section>

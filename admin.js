@@ -55,6 +55,158 @@ const starter = {
   }
 };
 
+const starterTutorials = {
+  "vmix-dasar": {
+    category:"vMix & Live Streaming", categoryId:"vmix",
+    title:"Mengenal Dasar vMix",
+    intro:"vMix merupakan perangkat lunak produksi video yang dapat digunakan untuk mengelola berbagai sumber gambar dalam satu alur kerja produksi.",
+    sections:[
+      ["Apa itu vMix?","vMix digunakan untuk menggabungkan dan mengelola sumber video seperti kamera, file video, gambar, dan sumber lainnya. Antarmukanya menyediakan area untuk memantau sumber yang akan ditayangkan dan hasil yang sedang ditayangkan."],
+      ["Mengenal Input","Input adalah sumber yang dimasukkan ke dalam proyek, misalnya kamera, video, gambar, atau sumber lain yang didukung."],
+      ["Preview dan Program","Preview digunakan untuk menyiapkan sumber berikutnya. Program menunjukkan sumber yang sedang menjadi keluaran utama."],
+      ["Mengenal Transisi","Transisi digunakan untuk berpindah dari satu sumber gambar ke sumber lainnya. Pilihan transisi dapat disesuaikan dengan kebutuhan produksi."]
+    ]
+  },
+  "vmix-kamera": {
+    category:"vMix & Live Streaming", categoryId:"vmix",
+    title:"Mengatur Kamera di vMix",
+    intro:"Kamera dapat dimasukkan sebagai sumber video agar dapat dipilih dan dikelola dalam produksi.",
+    sections:[
+      ["Persiapan sumber kamera","Pastikan kamera dan perangkat capture dikenali oleh komputer sebelum menambahkannya ke proyek."],
+      ["Menambahkan input","Gunakan menu penambahan input di vMix, lalu pilih sumber kamera yang tersedia."],
+      ["Pemeriksaan gambar","Periksa gambar, format video, dan kestabilan sumber sebelum digunakan dalam produksi."]
+    ]
+  },
+  "vmix-transisi": {
+    category:"vMix & Live Streaming", categoryId:"vmix",
+    title:"Preview, Program, Cut, dan Transition",
+    intro:"Preview dan Program membantu operator menyiapkan gambar berikutnya tanpa langsung mengubah keluaran utama.",
+    sections:[
+      ["Preview","Area Preview digunakan untuk memilih dan memeriksa sumber yang akan ditayangkan berikutnya."],
+      ["Program","Area Program memperlihatkan sumber yang sedang ditayangkan."],
+      ["Cut dan Transition","Cut berpindah secara langsung, sedangkan transition menggunakan efek perpindahan sesuai pilihan yang tersedia."]
+    ]
+  },
+  "vmix-streaming": {
+    category:"vMix & Live Streaming", categoryId:"vmix",
+    title:"Persiapan Output Live Streaming",
+    intro:"Sebelum siaran, periksa sumber gambar, audio, koneksi internet, dan tujuan streaming.",
+    sections:[
+      ["Periksa sumber","Pastikan kamera, gambar, dan audio yang diperlukan sudah tersedia."],
+      ["Periksa tujuan siaran","Masukkan informasi tujuan streaming melalui pengaturan resmi platform yang digunakan."],
+      ["Uji sebelum tayang","Lakukan pengujian singkat dan pastikan gambar serta suara berjalan dengan baik."]
+    ]
+  },
+  "obs-dasar": {
+    category:"OBS Studio",categoryId:"obs",title:"Mengenal Dasar OBS Studio",
+    intro:"OBS Studio adalah aplikasi untuk merekam dan melakukan siaran langsung dengan menggabungkan berbagai sumber media.",
+    sections:[
+      ["Scene","Scene adalah susunan tampilan produksi yang dapat berisi beberapa sumber."],
+      ["Source","Source merupakan elemen yang dimasukkan ke dalam scene, seperti kamera, gambar, teks, dan audio."],
+      ["Audio Mixer","Audio Mixer digunakan untuk memantau dan mengatur level sumber suara."]
+    ]
+  },
+  "obs-scene": {
+    category:"OBS Studio",categoryId:"obs",title:"Membuat Scene dan Source",
+    intro:"Scene dan source menjadi dasar untuk menyusun tampilan produksi di OBS Studio.",
+    sections:[
+      ["Membuat scene","Buat scene sesuai kebutuhan, misalnya pembukaan, kamera utama, atau tampilan presentasi."],
+      ["Menambahkan source","Tambahkan sumber gambar, kamera, teks, atau media yang diperlukan."],
+      ["Memeriksa tata letak","Atur posisi dan ukuran elemen agar tampilan mudah dibaca."]
+    ]
+  },
+  "obs-audio": {
+    category:"OBS Studio",categoryId:"obs",title:"Mengatur Audio OBS",
+    intro:"Pengaturan audio membantu memastikan sumber suara dapat dipantau selama produksi.",
+    sections:[
+      ["Mengenal sumber audio","Kenali perangkat input dan output yang digunakan."],
+      ["Memantau level","Gunakan indikator audio untuk melihat aktivitas sinyal."],
+      ["Uji suara","Lakukan pengujian sebelum rekaman atau siaran dimulai."]
+    ]
+  },
+  "audio-dasar": {
+    category:"Audio & Sound System",categoryId:"audio",title:"Mengenal Dasar Audio",
+    intro:"Sistem audio terdiri dari sumber suara, perangkat pemrosesan, penguat, dan perangkat keluaran.",
+    sections:[
+      ["Input","Input menerima sinyal dari mikrofon, pemutar audio, atau sumber lainnya."],
+      ["Pemrosesan","Sinyal dapat diproses menggunakan mixer dan perangkat pemrosesan sesuai kebutuhan."],
+      ["Output","Output mengirimkan sinyal menuju perangkat berikutnya, seperti amplifier atau sistem perekaman."]
+    ]
+  },
+  "audio-eq": {
+    category:"Audio & Sound System",categoryId:"audio",title:"Pengenalan Equalizer",
+    intro:"Equalizer digunakan untuk mengatur tingkat energi pada rentang frekuensi tertentu.",
+    sections:[
+      ["Fungsi EQ","EQ membantu membentuk karakter tonal dan menangani kebutuhan koreksi suara."],
+      ["Frekuensi","Pengaturan EQ bekerja pada rentang frekuensi rendah, menengah, dan tinggi."],
+      ["Evaluasi","Dengarkan hasil perubahan dan lakukan penyesuaian secara bertahap."]
+    ]
+  },
+  "audio-dsp": {
+    category:"Audio & Sound System",categoryId:"audio",title:"Mengenal DSP dan Crossover",
+    intro:"DSP merupakan perangkat pemrosesan sinyal digital. Crossover membantu membagi rentang frekuensi ke jalur keluaran yang sesuai.",
+    sections:[
+      ["Mengenal DSP","DSP menyediakan fungsi pemrosesan sinyal dalam satu perangkat."],
+      ["Mengenal crossover","Crossover membagi sinyal audio berdasarkan rentang frekuensi."],
+      ["Pemeriksaan sistem","Gunakan spesifikasi perangkat dan panduan pabrikan saat menyusun sistem."]
+    ]
+  },
+  "audio-rta": {
+    category:"Audio & Sound System",categoryId:"audio",title:"Pengenalan RTA",
+    intro:"Real Time Analyzer atau RTA menampilkan gambaran tingkat energi suara pada berbagai rentang frekuensi.",
+    sections:[
+      ["Fungsi RTA","RTA membantu melihat distribusi energi frekuensi dari sinyal yang diukur."],
+      ["Membaca tampilan","Grafik memperlihatkan respons pada pita frekuensi yang berbeda."],
+      ["Kondisi pengukuran","Hasil pengukuran dipengaruhi mikrofon, posisi, ruangan, dan kondisi pengujian."]
+    ]
+  },
+  "video-kamera": {
+    category:"Video Production",categoryId:"video",title:"Mengenal Kamera Video",
+    intro:"Kamera video menangkap gambar untuk kebutuhan dokumentasi, produksi, dan siaran.",
+    sections:[
+      ["Pengaturan dasar","Kenali resolusi, frame rate, fokus, dan white balance."],
+      ["Koneksi","Periksa jalur koneksi kamera ke perangkat produksi."],
+      ["Uji gambar","Periksa hasil gambar sebelum kegiatan dimulai."]
+    ]
+  },
+  "video-komposisi": {
+    category:"Video Production",categoryId:"video",title:"Dasar Komposisi Gambar",
+    intro:"Komposisi membantu menyusun elemen visual agar pesan gambar mudah dipahami.",
+    sections:[
+      ["Framing","Tentukan batas area gambar sesuai kebutuhan."],
+      ["Penempatan objek","Perhatikan ruang pandang dan keseimbangan dalam frame."],
+      ["Konsistensi","Jaga konsistensi komposisi antar kamera dalam satu produksi."]
+    ]
+  },
+  "video-lighting": {
+    category:"Video Production",categoryId:"video",title:"Dasar Pencahayaan",
+    intro:"Pencahayaan membantu kamera menangkap objek dengan jelas dan mendukung suasana visual.",
+    sections:[
+      ["Cahaya utama","Kenali fungsi cahaya utama dalam menerangi objek."],
+      ["Cahaya pengisi","Cahaya pengisi membantu mengurangi kontras bayangan."],
+      ["Uji hasil","Periksa hasil melalui monitor kamera sebelum produksi."]
+    ]
+  },
+  "multi-perangkat": {
+    category:"Multimedia",categoryId:"multimedia",title:"Perangkat Produksi Multimedia",
+    intro:"Produksi multimedia dapat melibatkan komputer, kamera, perangkat audio, pencahayaan, dan perangkat pendukung.",
+    sections:[
+      ["Perangkat utama","Tentukan perangkat berdasarkan kebutuhan produksi."],
+      ["Koneksi perangkat","Periksa kompatibilitas dan jalur koneksi."],
+      ["Perawatan","Simpan dan rawat perangkat sesuai petunjuk produsen."]
+    ]
+  },
+  "multi-workflow": {
+    category:"Multimedia",categoryId:"multimedia",title:"Alur Kerja Produksi",
+    intro:"Alur kerja yang terencana membantu proses produksi berjalan lebih tertib.",
+    sections:[
+      ["Perencanaan","Tentukan tujuan, kebutuhan, dan pembagian tugas."],
+      ["Produksi","Laksanakan pengambilan gambar, suara, atau siaran sesuai rencana."],
+      ["Publikasi","Periksa hasil akhir sebelum dipublikasikan."]
+    ]
+  }
+};
+
 const starterCategories = {
   vmix: { title: "vMix & Live Streaming", description: "Belajar produksi live streaming, kamera, transisi, audio, dan output siaran.", materials: [] },
   obs: { title: "OBS Studio", description: "Belajar scene, sumber video, audio, dan siaran.", materials: [] },
@@ -91,6 +243,7 @@ function mergeContent(saved = {}) {
     contact: { ...starter.contact, ...(saved.contact || {}) },
     nav: { ...starter.nav, ...(saved.nav || {}) },
     categories: { ...starterCategories, ...(saved.categories || {}) },
+    tutorials: { ...structuredClone(starterTutorials), ...(saved.tutorials || {}) },
     articles: Array.isArray(saved.articles) ? saved.articles : structuredClone(starter.articles),
     services: (Array.isArray(saved.services) ? saved.services : structuredClone(starter.services)).map(service => ({ ...service, packages: Array.isArray(service.packages) ? service.packages.map(pkg => ({ ...pkg, videos: Array.isArray(pkg.videos) ? pkg.videos : [] })) : [] }))
   };
@@ -299,19 +452,32 @@ function savePackageFields(showMessage = true) {
 function renderLists() {
   const currentCats = Object.entries(data.categories || {});
   $("categoryList").innerHTML = currentCats.map(([id, category]) => `
-    <div class="manage-item">
+    <div class="manage-item" data-category-card="${esc(id)}">
       <strong>${esc(category.title)}</strong><p>${esc(category.description)}</p>
       <div class="manage-actions">
-        <button class="small-btn" data-editcat="${esc(id)}">Edit</button>
-        <button class="small-btn danger" data-delcat="${esc(id)}">Hapus</button>
+        <button type="button" class="small-btn" data-editcat="${esc(id)}">Edit</button>
+        <button type="button" class="small-btn danger" data-delcat="${esc(id)}">Hapus</button>
+      </div>
+      <div class="category-inline-editor" data-category-editor="${esc(id)}" hidden>
+        <div class="field"><label>Nama kategori</label><input data-category-title value="${esc(category.title)}"></div>
+        <div class="field"><label>Deskripsi kategori</label><textarea data-category-desc rows="3">${esc(category.description || "")}</textarea></div>
+        <div class="manage-actions"><button type="button" class="btn gold" data-savecat="${esc(id)}">Simpan Edit</button><button type="button" class="small-btn" data-cancelcat="${esc(id)}">Batal</button></div>
       </div>
     </div>`).join("") || "<p>Belum ada kategori.</p>";
 
   $("articleList").innerHTML = (data.articles || []).map((article, index) => `
-    <div class="manage-item"><strong>${esc(article.title)}</strong><p>${esc(article.desc)}</p>
+    <div class="manage-item article-manage-item" data-article-card="${index}">
+      <strong>${esc(article.title)}</strong><p>${esc(article.desc)}</p>
       <div class="manage-actions">
-        <button class="small-btn" data-editarticle="${index}">Edit</button>
-        <button class="small-btn danger" data-delarticle="${index}">Hapus</button>
+        <button type="button" class="small-btn" data-editarticle="${index}">Edit</button>
+        <button type="button" class="small-btn danger" data-delarticle="${index}">Hapus</button>
+      </div>
+      <div class="article-inline-editor" data-article-editor="${index}" hidden>
+        <div class="field"><label>Judul artikel</label><input data-article-title value="${esc(article.title)}"></div>
+        <div class="field"><label>Deskripsi / ringkasan</label><textarea data-article-desc rows="3">${esc(article.desc || "")}</textarea></div>
+        <div class="field"><label>Isi artikel lengkap</label><textarea data-article-body rows="8">${esc(article.body || "")}</textarea></div>
+        <div class="field"><label>Link selengkapnya (opsional)</label><input data-article-url value="${esc(article.url || "")}" placeholder="https://... atau materi.html?id=..."></div>
+        <div class="manage-actions"><button type="button" class="btn gold" data-savearticle="${index}">Simpan Edit</button><button type="button" class="small-btn" data-cancelarticle="${index}">Batal</button></div>
       </div>
     </div>`).join("") || "<p>Belum ada artikel.</p>";
 
@@ -328,28 +494,92 @@ function renderLists() {
       <div class="field"><label>Nama menu</label><input data-navlabel="${esc(key)}" value="${esc(item.label)}"></div>
       <label><input type="checkbox" data-navvisible="${esc(key)}" ${item.visible ? "checked" : ""}> Tampilkan menu</label>
     </div>`).join("");  renderPackageEditor();
+  renderMaterialEditor();
 }
 
+function slugify(value) {
+  return String(value || "materi").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "materi";
+}
+
+function renderMaterialEditor(selectedId = $("materialSelect")?.value || "") {
+  const categorySelect = $("materialCategory");
+  const materialSelect = $("materialSelect");
+  if (!categorySelect || !materialSelect) return;
+  const previousCategory = categorySelect.value;
+  categorySelect.innerHTML = Object.entries(data.categories || {}).map(([id, cat]) => `<option value="${esc(id)}">${esc(cat.title)}</option>`).join("");
+  if (data.categories?.[previousCategory]) categorySelect.value = previousCategory;
+  const categoryId = categorySelect.value;
+  const entries = Object.entries(data.tutorials || {}).filter(([, item]) => item.categoryId === categoryId);
+  materialSelect.innerHTML = `<option value="">Pilih materi</option>` + entries.map(([id,item]) => `<option value="${esc(id)}">${esc(item.title || id)}</option>`).join("");
+  if (entries.some(([id]) => id === selectedId)) materialSelect.value = selectedId;
+  loadMaterialFields();
+}
+
+function loadMaterialFields() {
+  const id = $("materialSelect")?.value;
+  const item = data.tutorials?.[id];
+  $("materialTitle").value = item?.title || "";
+  $("materialDesc").value = item?.desc || item?.intro || "";
+  $("materialIntro").value = item?.intro || "";
+  $("materialBody").value = item?.body || (item?.sections || []).map(section => `${section[0]}\n${section[1]}`).join("\n\n");
+  $("deleteMaterial").disabled = !item;
+}
+
+function saveMaterialFields(showToast = true) {
+  const categoryId = $("materialCategory").value;
+  const category = data.categories?.[categoryId];
+  const title = $("materialTitle").value.trim();
+  if (!category || !title) return toast("Pilih kategori dan isi judul materi.");
+  let id = $("materialSelect").value;
+  if (!id) id = `${slugify(title)}-${Date.now()}`;
+  data.tutorials = data.tutorials || {};
+  data.tutorials[id] = { ...(data.tutorials[id] || {}), category: category.title, categoryId, title, desc: $("materialDesc").value.trim(), intro: $("materialIntro").value.trim(), body: $("materialBody").value };
+  renderMaterialEditor(id);
+  if (showToast) toast("Materi diperbarui. Klik Simpan Semua untuk menyimpan online.");
+}
 
 function editItem(kind, index) {
   const item = data[kind]?.[index];
   if (!item) return;
   const title = prompt("Ubah judul:", item.title);
   if (title === null) return;
-  const desc = prompt("Ubah deskripsi:", item.desc || "");
+  const desc = prompt("Ubah deskripsi / ringkasan:", item.desc || "");
   if (desc === null) return;
   item.title = title;
   item.desc = desc;
   if (kind === "articles") {
-    const body = prompt("Ubah isi artikel:", item.body || "");
+    const body = prompt("Ubah isi artikel lengkap:", item.body || "");
     if (body !== null) item.body = body;
+    const url = prompt("Link selengkapnya (kosongkan jika tidak ada):", item.url || "");
+    if (url !== null) item.url = url.trim();
   }
   renderLists();
 }
 
 document.addEventListener("click", event => {
   const target = event.target;
-  if (target.dataset.editarticle !== undefined) editItem("articles", +target.dataset.editarticle);
+  if (target.dataset.editarticle !== undefined) {
+    const editor = document.querySelector(`[data-article-editor="${target.dataset.editarticle}"]`);
+    if (editor) { editor.hidden = false; editor.querySelector("[data-article-title]")?.focus(); }
+  }
+  if (target.dataset.cancelarticle !== undefined) {
+    const editor = document.querySelector(`[data-article-editor="${target.dataset.cancelarticle}"]`);
+    if (editor) editor.hidden = true;
+  }
+  if (target.dataset.savearticle !== undefined) {
+    const index = Number(target.dataset.savearticle);
+    const card = document.querySelector(`[data-article-card="${index}"]`);
+    const article = data.articles?.[index];
+    if (!card || !article) return;
+    const title = card.querySelector("[data-article-title]").value.trim();
+    if (!title) return toast("Judul artikel tidak boleh kosong.");
+    article.title = title;
+    article.desc = card.querySelector("[data-article-desc]").value.trim();
+    article.body = card.querySelector("[data-article-body]").value;
+    article.url = card.querySelector("[data-article-url]").value.trim();
+    renderLists();
+    toast("Artikel diperbarui. Klik Simpan Semua untuk menyimpan online.");
+  }
   if (target.dataset.delarticle !== undefined && confirm("Hapus artikel ini?")) {
     data.articles.splice(+target.dataset.delarticle, 1);
     renderLists();
@@ -360,15 +590,25 @@ document.addEventListener("click", event => {
     renderLists();
     if (typeof fillPortfolioFolders === "function") fillPortfolioFolders();
   }
-  if (target.dataset.editcat) {
-    const category = data.categories[target.dataset.editcat];
-    if (!category) return;
-    const title = prompt("Nama kategori:", category.title);
-    if (title !== null) {
-      category.title = title;
-      category.description = prompt("Deskripsi kategori:", category.description) || category.description;
-      renderLists();
-    }
+  if (target.dataset.editcat !== undefined) {
+    const editor = document.querySelector(`[data-category-editor="${CSS.escape(target.dataset.editcat)}"]`);
+    if (editor) { editor.hidden = false; editor.querySelector("[data-category-title]")?.focus(); }
+  }
+  if (target.dataset.cancelcat !== undefined) {
+    const editor = document.querySelector(`[data-category-editor="${CSS.escape(target.dataset.cancelcat)}"]`);
+    if (editor) editor.hidden = true;
+  }
+  if (target.dataset.savecat !== undefined) {
+    const id = target.dataset.savecat;
+    const category = data.categories[id];
+    const card = document.querySelector(`[data-category-card="${CSS.escape(id)}"]`);
+    if (!category || !card) return;
+    const title = card.querySelector("[data-category-title]").value.trim();
+    if (!title) return toast("Nama kategori tidak boleh kosong.");
+    category.title = title;
+    category.description = card.querySelector("[data-category-desc]").value.trim();
+    renderLists();
+    toast("Kategori diperbarui. Klik Simpan Semua untuk menyimpan online.");
   }
   if (target.dataset.delcat && confirm("Hapus kategori ini?")) {
     delete data.categories[target.dataset.delcat];
@@ -412,6 +652,47 @@ $("deletePackage").addEventListener("click", () => {
   service.packages.splice(activePackageIndex, 1);
   renderPackageEditor();
   toast("Paket dihapus. Klik Simpan Semua untuk menyimpan online.");
+});
+
+$("materialCategory")?.addEventListener("change", () => renderMaterialEditor());
+$("materialSelect")?.addEventListener("change", loadMaterialFields);
+$("newMaterial")?.addEventListener("click", () => {
+  $("materialSelect").value = "";
+  ["materialTitle", "materialDesc", "materialIntro", "materialBody"].forEach(id => { $(id).value = ""; });
+  $("deleteMaterial").disabled = true;
+  $("materialTitle").focus();
+});
+$("saveMaterial")?.addEventListener("click", () => saveMaterialFields(true));
+$("deleteMaterial")?.addEventListener("click", () => {
+  const id = $("materialSelect").value;
+  if (!id || !data.tutorials?.[id] || !confirm("Hapus materi tutorial ini?")) return;
+  delete data.tutorials[id];
+  renderMaterialEditor();
+  toast("Materi dihapus. Klik Simpan Semua untuk menyimpan online.");
+});
+$("uploadMaterialImage")?.addEventListener("click", async () => {
+  const file = $("materialImageFile").files?.[0];
+  if (!file) return toast("Pilih gambar terlebih dahulu.");
+  if (!file.type.startsWith("image/") || file.size > 50 * 1024 * 1024) return toast("Pilih gambar yang valid, maksimal 50 MB.");
+  try {
+    const client = await window.ngincengAuthReady;
+    const materialId = $("materialSelect").value || slugify($("materialTitle").value || "materi-baru");
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+    const path = `education/${materialId}/${Date.now()}-${safeName}`;
+    const { error } = await client.storage.from("nginceng-media").upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type });
+    if (error) throw error;
+    const { data: publicData } = client.storage.from("nginceng-media").getPublicUrl(path);
+    const marker = `\n\n[[image:${publicData.publicUrl}]]\n\n`;
+    const textarea = $("materialBody");
+    const start = textarea.selectionStart ?? textarea.value.length;
+    const end = textarea.selectionEnd ?? start;
+    textarea.setRangeText(marker, start, end, "end");
+    $("materialImageFile").value = "";
+    toast("Gambar berhasil diunggah dan penandanya disisipkan. Simpan materi lalu Simpan Semua.");
+  } catch (error) {
+    console.error("Upload gambar materi gagal:", error);
+    toast("Upload gagal: " + (error.message || "Periksa login dan kebijakan Storage."));
+  }
 });
 
 $("addArticle").onclick = () => {
