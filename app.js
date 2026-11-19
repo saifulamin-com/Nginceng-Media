@@ -568,4 +568,85 @@ if (mainContent) {
 
 /* Galeri layanan kini dibaca dari metadata Supabase dan URL publik Supabase Storage. */
 
+
+/* ===== PREVIEW FOTO GALERI LAYANAN (LIGHTBOX) ===== */
+(function enableServiceGalleryLightbox(){
+  const appRoot = document.getElementById("app");
+  if (!appRoot) return;
+
+  let overlay = null;
+  let previousFocus = null;
+
+  function closeLightbox(){
+    if (!overlay) return;
+    overlay.remove();
+    overlay = null;
+    document.removeEventListener("keydown", onKeyDown);
+    if (previousFocus && typeof previousFocus.focus === "function") previousFocus.focus();
+  }
+
+  function onKeyDown(event){
+    if (event.key === "Escape") closeLightbox();
+  }
+
+  function openLightbox(photo){
+    closeLightbox();
+    previousFocus = photo;
+    overlay = document.createElement("div");
+    overlay.className = "nginceng-lightbox";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Pratinjau foto galeri");
+
+    const closeButton = document.createElement("button");
+    closeButton.className = "nginceng-lightbox-close";
+    closeButton.type = "button";
+    closeButton.setAttribute("aria-label", "Tutup foto");
+    closeButton.textContent = "×";
+
+    const largeImage = document.createElement("img");
+    largeImage.className = "nginceng-lightbox-image";
+    largeImage.src = photo.currentSrc || photo.src;
+    largeImage.alt = photo.alt || "Foto dokumentasi Nginceng Media";
+
+    const caption = document.createElement("p");
+    caption.className = "nginceng-lightbox-caption";
+    const card = photo.closest(".service-media-card");
+    const title = card && card.querySelector("figcaption strong");
+    const detail = card && card.querySelector("figcaption small");
+    caption.textContent = [title?.textContent, detail?.textContent].filter(Boolean).join(" — ");
+
+    closeButton.addEventListener("click", closeLightbox);
+    overlay.addEventListener("click", event => {
+      if (event.target === overlay) closeLightbox();
+    });
+
+    overlay.append(closeButton, largeImage, caption);
+    document.body.appendChild(overlay);
+    document.addEventListener("keydown", onKeyDown);
+    closeButton.focus();
+  }
+
+  appRoot.addEventListener("click", event => {
+    const photo = event.target.closest(".service-media-card img");
+    if (!photo) return;
+    event.preventDefault();
+    openLightbox(photo);
+  });
+
+  appRoot.addEventListener("keydown", event => {
+    const photo = event.target.closest(".service-media-card img");
+    if (photo && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openLightbox(photo);
+    }
+  });
+
+  appRoot.querySelectorAll(".service-media-card img").forEach(photo => {
+    photo.tabIndex = 0;
+    photo.setAttribute("role", "button");
+    photo.setAttribute("aria-label", "Perbesar foto: " + (photo.alt || "dokumentasi"));
+  });
+})();
+
 })();
