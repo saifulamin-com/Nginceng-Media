@@ -201,23 +201,97 @@ const tutorials = {
 };
 
 
-/* Konten yang dikelola dari Nginceng Media Studio */
-const studioConfig = (() => {
-  try { return JSON.parse(localStorage.getItem("ngincengStudioSettings") || "{}"); }
-  catch (_) { return {}; }
-})();
-const studioContent = (() => {
-  try { return JSON.parse(localStorage.getItem("ngincengStudioContent") || "{}"); }
-  catch (_) { return {}; }
-})();
-if (studioContent.categories) {
-  Object.keys(categories).forEach(k => delete categories[k]);
-  Object.assign(categories, studioContent.categories);
-}
-if (studioContent.tutorials) {
-  Object.keys(tutorials).forEach(k => delete tutorials[k]);
-  Object.assign(tutorials, studioContent.tutorials);
-}
+/* Konten Studio: utamakan Supabase, gunakan cache lokal sebagai cadangan. */
+(async function initNgincengSite() {
+  let studioConfig = {};
+  let studioContent = {};
+
+  function readLocalCache() {
+    try {
+      studioConfig = JSON.parse(localStorage.getItem("ngincengStudioSettings") || "{}");
+    } catch (_) {
+      studioConfig = {};
+    }
+    try {
+      studioContent = JSON.parse(localStorage.getItem("ngincengStudioContent") || "{}");
+    } catch (_) {
+      studioContent = {};
+    }
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const existing = [...document.scripts].find(script => script.src === new URL(src, document.baseURI).href);
+      if (existing) return resolve();
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.onload = () => {
+        script.dataset.loaded = "true";
+        resolve();
+      };
+      script.onerror = () => reject(new Error("Gagal memuat " + src));
+      document.head.appendChild(script);
+    });
+  }
+
+  async function loadOnlineContent() {
+    if (!window.supabase) {
+      await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2");
+    }
+
+    if (!window.NGINCENG_SUPABASE_URL || !window.NGINCENG_SUPABASE_KEY) {
+      await loadScript("supabase-config.js");
+    }
+
+    if (!window.supabase || !window.NGINCENG_SUPABASE_URL || !window.NGINCENG_SUPABASE_KEY) {
+      throw new Error("Konfigurasi Supabase belum tersedia.");
+    }
+
+    const client = window.supabase.createClient(
+      window.NGINCENG_SUPABASE_URL,
+      window.NGINCENG_SUPABASE_KEY
+    );
+
+    const { data, error } = await client
+      .from("nginceng_site_content")
+      .select("settings, content")
+      .eq("id", 1)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data) {
+      studioConfig = data.settings || {};
+      studioContent = data.content || {};
+      try {
+        localStorage.setItem("ngincengStudioSettings", JSON.stringify(studioConfig));
+        localStorage.setItem("ngincengStudioContent", JSON.stringify(studioContent));
+      } catch (cacheError) {
+        console.warn("Konten online berhasil dimuat, tetapi cache lokal tidak dapat disimpan.", cacheError);
+      }
+      console.info("Nginceng Media: konten berhasil dimuat dari Supabase.");
+    } else {
+      readLocalCache();
+      console.info("Nginceng Media: data Supabase belum tersedia, memakai konten bawaan/cache.");
+    }
+  }
+
+  try {
+    await loadOnlineContent();
+  } catch (error) {
+    console.warn("Nginceng Media: Supabase tidak dapat dimuat. Menggunakan cache lokal.", error);
+    readLocalCache();
+  }
+
+  if (studioContent.categories) {
+    Object.keys(categories).forEach(k => delete categories[k]);
+    Object.assign(categories, studioContent.categories);
+  }
+  if (studioContent.tutorials) {
+    Object.keys(tutorials).forEach(k => delete tutorials[k]);
+    Object.assign(tutorials, studioContent.tutorials);
+  }
 
 const header = `
 <header class="site-header">
@@ -405,10 +479,12 @@ document.querySelectorAll("[data-nav]").forEach(link=>{
 
 const menuButton = document.getElementById("menu-toggle");
 const nav = document.getElementById("main-nav");
-menuButton.addEventListener("click",()=>{
-  nav.classList.toggle("open");
-  menuButton.classList.toggle("pulse");
-});
+if (menuButton && nav) {
+  menuButton.addEventListener("click", () => {
+    nav.classList.toggle("open");
+    menuButton.classList.toggle("pulse");
+  });
+}
 
 document.querySelectorAll("a").forEach(link=>{
   link.addEventListener("click",()=>{
@@ -506,4 +582,6 @@ if (mainContent) {
     serviceCards[i].append(section);
   }
  }catch(e){console.warn("Galeri layanan belum tersedia",e)}
+})();
+
 })();
