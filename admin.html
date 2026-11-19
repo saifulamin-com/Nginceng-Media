@@ -36,16 +36,7 @@
 <section class="panel" id="panel-education">
 <h2>Kelola kategori edukasi</h2><div id="categoryList" class="manage-list"></div>
 <div class="subform"><h3>Tambah kategori</h3><div class="field"><label>Nama kategori</label><input id="newCatTitle" placeholder="Contoh: Lighting & Panggung"></div><div class="field"><label>Deskripsi</label><textarea id="newCatDesc" rows="2"></textarea></div><button class="btn gold" id="addCategory">Tambah Kategori</button></div>
-<div class="subform" style="margin-top:16px"><h3>Kelola materi tutorial</h3>
-<div class="field"><label>Pilih kategori</label><select id="materialCategory"></select></div>
-<div id="materialList" class="manage-list"></div>
-<div class="field"><label>Judul materi</label><input id="materialTitle" placeholder="Contoh: Mengatur kamera di vMix"></div>
-<div class="field"><label>Pengantar materi</label><textarea id="materialIntro" rows="3" placeholder="Penjelasan singkat materi"></textarea></div>
-<div class="field"><label>Isi materi</label><textarea id="materialBody" rows="6" placeholder="Tulis isi materi. Pisahkan paragraf dengan baris kosong."></textarea></div>
-<div class="upload-card"><b>Gambar pendukung materi (opsional)</b><p>Format JPG, PNG, WebP atau GIF. Maksimal 25 MB.</p><label class="upload-btn">Pilih Gambar<input type="file" id="materialImage" accept="image/jpeg,image/png,image/webp,image/gif"></label><span id="materialImageName" class="file-name">Belum memilih file</span></div>
-<div class="manage-actions"><button class="btn gold" id="addMaterial">Tambah Materi</button><button class="small-btn" id="cancelMaterialEdit" type="button">Batal Edit</button></div>
-</div>
-<p class="tip">Materi lama tetap dipertahankan. Materi baru dan gambar akan tersimpan online melalui Supabase.</p>
+<p class="tip">Pilih kategori di daftar untuk mengedit judul/deskripsi atau menghapusnya. Materi tutorial awal tetap tersedia. Penambahan materi per kategori akan kita lengkapi pada tahap berikutnya.</p>
 </section>
 <section class="panel" id="panel-articles">
 <h2>Kelola artikel</h2><div id="articleList" class="manage-list"></div>
@@ -53,16 +44,28 @@
 </section>
 <section class="panel" id="panel-youtube">
 <div class="field"><label>Judul halaman YouTube</label><input id="ytHeading"></div><div class="field"><label>Deskripsi</label><textarea id="ytDescription" rows="2"></textarea></div><div class="field"><label>Judul bagian video</label><input id="ytPanelTitle"></div><div class="field"><label>Keterangan</label><textarea id="ytPanelText" rows="2"></textarea></div><div class="field"><label>Link kanal atau video YouTube</label><input id="ytUrl" placeholder="https://www.youtube.com/@namakanal"></div></section>
-<section class="panel" id="panel-services"><h2>Kelola layanan</h2><div id="serviceList" class="manage-list"></div><div class="subform"><h3>Tambah layanan</h3><div class="field"><label>Nama layanan</label><input id="newServiceTitle"></div><div class="field"><label>Deskripsi layanan</label><textarea id="newServiceDesc" rows="2"></textarea></div><button class="btn gold" id="addService">Tambah Layanan</button></div>
-<div class="subform"><h3>Kelola paket layanan</h3><div class="field"><label>Pilih layanan</label><select id="packageService"></select></div><div id="packageList" class="manage-list"></div><div class="field"><label>Nama paket</label><input id="packageTitle" placeholder="Contoh: Paket Basic"></div><div class="field"><label>Deskripsi paket</label><textarea id="packageDesc" rows="3"></textarea></div><div class="field"><label>Harga / keterangan harga</label><input id="packagePrice" placeholder="Contoh: Mulai Rp 750.000"></div><div class="manage-actions"><button class="btn gold" id="addPackage">Tambah Paket</button><button class="small-btn" id="cancelPackageEdit" type="button">Batal Edit</button></div></div>
+<section class="panel" id="panel-services">
+<h2>Kelola layanan</h2><div id="serviceList" class="manage-list"></div>
+<div class="subform"><h3>Tambah layanan</h3><div class="field"><label>Nama layanan</label><input id="newServiceTitle"></div><div class="field"><label>Deskripsi layanan</label><textarea id="newServiceDesc" rows="2"></textarea></div><button class="btn gold" id="addService">Tambah Layanan</button></div>
+<div class="subform package-editor"><h3>Kelola paket & video YouTube</h3>
+<p class="tip">Pilih layanan dan paket. Setiap paket dapat memiliki beberapa video YouTube. Perubahan disimpan bersama tombol “Simpan Semua”.</p>
+<div class="field"><label>Pilih layanan</label><select id="packageServiceSelect"></select></div>
+<div class="field"><label>Pilih paket</label><select id="packageSelect"></select></div>
+<div class="field"><label>Nama paket</label><input id="packageTitle" placeholder="Contoh: Paket Hemat"></div>
+<div class="field"><label>Deskripsi paket</label><textarea id="packageDesc" rows="3" placeholder="Tuliskan fasilitas dan detail paket"></textarea></div>
+<div class="field"><label>Harga paket</label><input id="packagePrice" placeholder="Contoh: Rp 1.500.000"></div>
+<h3>Video YouTube untuk paket ini</h3><div id="packageVideoList" class="manage-list"></div>
+<div class="manage-actions"><button type="button" class="small-btn" id="addPackageVideo">+ Tambah link YouTube</button><button type="button" class="small-btn" id="savePackage">Simpan Paket</button><button type="button" class="small-btn danger" id="deletePackage">Hapus Paket</button></div>
+<div class="subform" style="margin-top:14px"><h3>Tambah paket baru</h3><button type="button" class="btn gold" id="newPackage">+ Buat Paket Baru</button></div>
+</div>
 </section>
 <section class="panel" id="panel-portfolio">
 <h2>Foto & Video Portofolio Layanan</h2>
-<p class="tip">Setiap layanan memiliki galeri foto online. Pilih layanan, tambahkan gambar, lalu simpan. Foto disimpan di Supabase Storage dan dapat dilihat dari perangkat lain.</p>
+<p class="tip">Setiap layanan memiliki galeri sendiri. Pilih layanan, tambahkan foto/video, lalu simpan. Foto dan video disimpan lokal di browser laptop ini pada versi percobaan.</p>
 <div class="field"><label>Pilih folder layanan</label><select id="portfolioService"></select></div>
 <div class="field"><label>Judul foto / video</label><input id="mediaTitle" placeholder="Contoh: Live streaming acara masjid"></div>
 <div class="field"><label>Keterangan</label><textarea id="mediaCaption" rows="2" placeholder="Tulis keterangan singkat..."></textarea></div>
-<div class="upload-card"><b>Pilih foto atau video</b><p>Format JPG, PNG, WebP atau GIF. Maksimal 25 MB per file.</p><label class="upload-btn">Pilih File<input type="file" id="portfolioFiles" accept="image/jpeg,image/png,image/webp,image/gif" multiple></label><span id="portfolioFileName" class="file-name">Belum memilih file</span></div>
+<div class="upload-card"><b>Pilih foto atau video</b><p>Format gambar umum dan video MP4/WebM. Maksimal 25 MB per file untuk tahap uji coba.</p><label class="upload-btn">Pilih File<input type="file" id="portfolioFiles" accept="image/*,video/mp4,video/webm" multiple></label><span id="portfolioFileName" class="file-name">Belum memilih file</span></div>
 <button class="btn gold" id="addPortfolio">Tambah ke Galeri</button>
 <h3 style="margin-top:24px">Isi folder terpilih</h3><div id="portfolioList" class="manage-list"></div>
 </section>

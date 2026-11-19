@@ -291,3 +291,9 @@ body {
   border-radius:50%;background:#111;color:#fff;font-size:30px;line-height:1;cursor:pointer;
 }
 @media(max-width:560px){.nginceng-package-panel{padding:28px 22px}.nginceng-package-panel>p{font-size:14px}}
+
+/* Link video YouTube di detail paket */
+.nginceng-package-video-heading{font-size:15px;margin:22px 0 10px;color:var(--gold,#b7832d)}
+.nginceng-package-video-list{display:grid;gap:9px;margin:10px 0 18px}
+.nginceng-package-video-link{display:block;padding:12px 14px;border:1px solid rgba(201,154,60,.35);border-radius:8px;color:var(--ink,#242424);background:#fff;text-decoration:none;font-weight:700;font-size:13px;transition:.2s}
+.nginceng-package-video-link:hover{border-color:var(--gold,#c99a3c);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}

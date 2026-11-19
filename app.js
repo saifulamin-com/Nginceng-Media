@@ -449,7 +449,7 @@ function renderServices() {
   const selectedId = params.get("layanan");
   const selected = selectedId ? services.find((service, index) => (service.id || String(index)) === selectedId) : null;
   if (selected) {
-    const packages = (selected.packages || []).map((item, index) => `<div class="card service-package" tabindex="0" role="button" aria-label="Lihat detail ${item.title}" data-package-detail><div class="card-number">${String(index+1).padStart(2,"0")}</div><h3>${item.title}</h3><p>${item.desc || ""}</p>${item.price ? `<strong class="service-price">${item.price}</strong>` : ""}<span class="card-link">LIHAT DETAIL →</span></div>`).join("");
+    const packages = (selected.packages || []).map((item, index) => `<div class="card service-package" tabindex="0" role="button" aria-label="Lihat detail ${item.title}" data-package-detail data-package-videos="${encodeURIComponent(JSON.stringify(item.videos || []))}"><div class="card-number">${String(index+1).padStart(2,"0")}</div><h3>${item.title}</h3><p>${item.desc || ""}</p>${item.price ? `<strong class="service-price">${item.price}</strong>` : ""}<span class="card-link">LIHAT DETAIL →</span></div>`).join("");
     const gallery = (selected.gallery || []).map(item => `<figure class="service-media-card"><img src="${item.url}" alt="${item.title || selected.title}" loading="lazy"><figcaption><strong>${item.title || "Dokumentasi"}</strong><small>${item.caption || ""}</small></figcaption></figure>`).join("");
     app.innerHTML = `<section class="page-hero"><h1>${selected.title}</h1><p>${selected.desc || "Informasi layanan Nginceng Media."}</p></section><section class="section section-light"><div class="container"><a class="back-link" href="layanan.html">← Kembali ke semua layanan</a>${packages ? `<div class="section-title"><h2>Pilihan Paket</h2><p>Pilih paket sesuai kebutuhan kegiatan.</p></div><div class="grid">${packages}</div>` : `<div class="callout">Informasi paket layanan akan segera ditambahkan.</div>`}${gallery ? `<div class="section-title" style="margin-top:48px"><h2>Galeri Layanan</h2><p>Dokumentasi pekerjaan dan kegiatan.</p></div><div class="service-gallery-grid">${gallery}</div>` : ""}</div></section>`;
     return;
@@ -663,6 +663,32 @@ if (mainContent) {
     const price = document.createElement("strong");
     price.className = "nginceng-package-price";
     price.textContent = card.querySelector(".service-price")?.textContent || "Hubungi kami untuk informasi harga";
+    const videoHeading = document.createElement("h3");
+    videoHeading.className = "nginceng-package-video-heading";
+    videoHeading.textContent = "Video Dokumentasi Paket";
+    const videoList = document.createElement("div");
+    videoList.className = "nginceng-package-video-list";
+    let videos = [];
+    try { videos = JSON.parse(decodeURIComponent(card.dataset.packageVideos || "%5B%5D")); } catch (_) { videos = []; }
+    videos.filter(video => video && typeof video.url === "string").forEach((video, index) => {
+      let parsed;
+      try { parsed = new URL(video.url); } catch (_) { return; }
+      const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+      if (parsed.protocol !== "https:" || !["youtube.com", "m.youtube.com", "youtu.be"].includes(host)) return;
+      const link = document.createElement("a");
+      link.className = "nginceng-package-video-link";
+      link.href = parsed.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "▶ " + (video.title || `Video dokumentasi ${index + 1}`);
+      videoList.appendChild(link);
+    });
+    if (!videoList.children.length) {
+      const empty = document.createElement("p");
+      empty.className = "nginceng-package-note";
+      empty.textContent = "Video dokumentasi untuk paket ini belum ditambahkan.";
+      videoList.appendChild(empty);
+    }
     const note = document.createElement("p");
     note.className = "nginceng-package-note";
     note.textContent = "Hubungi Nginceng Media untuk informasi dan pemesanan paket ini.";
@@ -671,7 +697,7 @@ if (mainContent) {
     modal.addEventListener("click", event => {
       if (event.target === modal) closePackageDetail();
     });
-    panel.append(close, number, title, desc, price, note);
+    panel.append(close, number, title, desc, price, videoHeading, videoList, note);
     modal.appendChild(panel);
     document.body.appendChild(modal);
     document.addEventListener("keydown", onPackageKeyDown);

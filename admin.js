@@ -55,158 +55,6 @@ const starter = {
   }
 };
 
-const starterTutorials = {
-  "vmix-dasar": {
-    category:"vMix & Live Streaming", categoryId:"vmix",
-    title:"Mengenal Dasar vMix",
-    intro:"vMix merupakan perangkat lunak produksi video yang dapat digunakan untuk mengelola berbagai sumber gambar dalam satu alur kerja produksi.",
-    sections:[
-      ["Apa itu vMix?","vMix digunakan untuk menggabungkan dan mengelola sumber video seperti kamera, file video, gambar, dan sumber lainnya. Antarmukanya menyediakan area untuk memantau sumber yang akan ditayangkan dan hasil yang sedang ditayangkan."],
-      ["Mengenal Input","Input adalah sumber yang dimasukkan ke dalam proyek, misalnya kamera, video, gambar, atau sumber lain yang didukung."],
-      ["Preview dan Program","Preview digunakan untuk menyiapkan sumber berikutnya. Program menunjukkan sumber yang sedang menjadi keluaran utama."],
-      ["Mengenal Transisi","Transisi digunakan untuk berpindah dari satu sumber gambar ke sumber lainnya. Pilihan transisi dapat disesuaikan dengan kebutuhan produksi."]
-    ]
-  },
-  "vmix-kamera": {
-    category:"vMix & Live Streaming", categoryId:"vmix",
-    title:"Mengatur Kamera di vMix",
-    intro:"Kamera dapat dimasukkan sebagai sumber video agar dapat dipilih dan dikelola dalam produksi.",
-    sections:[
-      ["Persiapan sumber kamera","Pastikan kamera dan perangkat capture dikenali oleh komputer sebelum menambahkannya ke proyek."],
-      ["Menambahkan input","Gunakan menu penambahan input di vMix, lalu pilih sumber kamera yang tersedia."],
-      ["Pemeriksaan gambar","Periksa gambar, format video, dan kestabilan sumber sebelum digunakan dalam produksi."]
-    ]
-  },
-  "vmix-transisi": {
-    category:"vMix & Live Streaming", categoryId:"vmix",
-    title:"Preview, Program, Cut, dan Transition",
-    intro:"Preview dan Program membantu operator menyiapkan gambar berikutnya tanpa langsung mengubah keluaran utama.",
-    sections:[
-      ["Preview","Area Preview digunakan untuk memilih dan memeriksa sumber yang akan ditayangkan berikutnya."],
-      ["Program","Area Program memperlihatkan sumber yang sedang ditayangkan."],
-      ["Cut dan Transition","Cut berpindah secara langsung, sedangkan transition menggunakan efek perpindahan sesuai pilihan yang tersedia."]
-    ]
-  },
-  "vmix-streaming": {
-    category:"vMix & Live Streaming", categoryId:"vmix",
-    title:"Persiapan Output Live Streaming",
-    intro:"Sebelum siaran, periksa sumber gambar, audio, koneksi internet, dan tujuan streaming.",
-    sections:[
-      ["Periksa sumber","Pastikan kamera, gambar, dan audio yang diperlukan sudah tersedia."],
-      ["Periksa tujuan siaran","Masukkan informasi tujuan streaming melalui pengaturan resmi platform yang digunakan."],
-      ["Uji sebelum tayang","Lakukan pengujian singkat dan pastikan gambar serta suara berjalan dengan baik."]
-    ]
-  },
-  "obs-dasar": {
-    category:"OBS Studio",categoryId:"obs",title:"Mengenal Dasar OBS Studio",
-    intro:"OBS Studio adalah aplikasi untuk merekam dan melakukan siaran langsung dengan menggabungkan berbagai sumber media.",
-    sections:[
-      ["Scene","Scene adalah susunan tampilan produksi yang dapat berisi beberapa sumber."],
-      ["Source","Source merupakan elemen yang dimasukkan ke dalam scene, seperti kamera, gambar, teks, dan audio."],
-      ["Audio Mixer","Audio Mixer digunakan untuk memantau dan mengatur level sumber suara."]
-    ]
-  },
-  "obs-scene": {
-    category:"OBS Studio",categoryId:"obs",title:"Membuat Scene dan Source",
-    intro:"Scene dan source menjadi dasar untuk menyusun tampilan produksi di OBS Studio.",
-    sections:[
-      ["Membuat scene","Buat scene sesuai kebutuhan, misalnya pembukaan, kamera utama, atau tampilan presentasi."],
-      ["Menambahkan source","Tambahkan sumber gambar, kamera, teks, atau media yang diperlukan."],
-      ["Memeriksa tata letak","Atur posisi dan ukuran elemen agar tampilan mudah dibaca."]
-    ]
-  },
-  "obs-audio": {
-    category:"OBS Studio",categoryId:"obs",title:"Mengatur Audio OBS",
-    intro:"Pengaturan audio membantu memastikan sumber suara dapat dipantau selama produksi.",
-    sections:[
-      ["Mengenal sumber audio","Kenali perangkat input dan output yang digunakan."],
-      ["Memantau level","Gunakan indikator audio untuk melihat aktivitas sinyal."],
-      ["Uji suara","Lakukan pengujian sebelum rekaman atau siaran dimulai."]
-    ]
-  },
-  "audio-dasar": {
-    category:"Audio & Sound System",categoryId:"audio",title:"Mengenal Dasar Audio",
-    intro:"Sistem audio terdiri dari sumber suara, perangkat pemrosesan, penguat, dan perangkat keluaran.",
-    sections:[
-      ["Input","Input menerima sinyal dari mikrofon, pemutar audio, atau sumber lainnya."],
-      ["Pemrosesan","Sinyal dapat diproses menggunakan mixer dan perangkat pemrosesan sesuai kebutuhan."],
-      ["Output","Output mengirimkan sinyal menuju perangkat berikutnya, seperti amplifier atau sistem perekaman."]
-    ]
-  },
-  "audio-eq": {
-    category:"Audio & Sound System",categoryId:"audio",title:"Pengenalan Equalizer",
-    intro:"Equalizer digunakan untuk mengatur tingkat energi pada rentang frekuensi tertentu.",
-    sections:[
-      ["Fungsi EQ","EQ membantu membentuk karakter tonal dan menangani kebutuhan koreksi suara."],
-      ["Frekuensi","Pengaturan EQ bekerja pada rentang frekuensi rendah, menengah, dan tinggi."],
-      ["Evaluasi","Dengarkan hasil perubahan dan lakukan penyesuaian secara bertahap."]
-    ]
-  },
-  "audio-dsp": {
-    category:"Audio & Sound System",categoryId:"audio",title:"Mengenal DSP dan Crossover",
-    intro:"DSP merupakan perangkat pemrosesan sinyal digital. Crossover membantu membagi rentang frekuensi ke jalur keluaran yang sesuai.",
-    sections:[
-      ["Mengenal DSP","DSP menyediakan fungsi pemrosesan sinyal dalam satu perangkat."],
-      ["Mengenal crossover","Crossover membagi sinyal audio berdasarkan rentang frekuensi."],
-      ["Pemeriksaan sistem","Gunakan spesifikasi perangkat dan panduan pabrikan saat menyusun sistem."]
-    ]
-  },
-  "audio-rta": {
-    category:"Audio & Sound System",categoryId:"audio",title:"Pengenalan RTA",
-    intro:"Real Time Analyzer atau RTA menampilkan gambaran tingkat energi suara pada berbagai rentang frekuensi.",
-    sections:[
-      ["Fungsi RTA","RTA membantu melihat distribusi energi frekuensi dari sinyal yang diukur."],
-      ["Membaca tampilan","Grafik memperlihatkan respons pada pita frekuensi yang berbeda."],
-      ["Kondisi pengukuran","Hasil pengukuran dipengaruhi mikrofon, posisi, ruangan, dan kondisi pengujian."]
-    ]
-  },
-  "video-kamera": {
-    category:"Video Production",categoryId:"video",title:"Mengenal Kamera Video",
-    intro:"Kamera video menangkap gambar untuk kebutuhan dokumentasi, produksi, dan siaran.",
-    sections:[
-      ["Pengaturan dasar","Kenali resolusi, frame rate, fokus, dan white balance."],
-      ["Koneksi","Periksa jalur koneksi kamera ke perangkat produksi."],
-      ["Uji gambar","Periksa hasil gambar sebelum kegiatan dimulai."]
-    ]
-  },
-  "video-komposisi": {
-    category:"Video Production",categoryId:"video",title:"Dasar Komposisi Gambar",
-    intro:"Komposisi membantu menyusun elemen visual agar pesan gambar mudah dipahami.",
-    sections:[
-      ["Framing","Tentukan batas area gambar sesuai kebutuhan."],
-      ["Penempatan objek","Perhatikan ruang pandang dan keseimbangan dalam frame."],
-      ["Konsistensi","Jaga konsistensi komposisi antar kamera dalam satu produksi."]
-    ]
-  },
-  "video-lighting": {
-    category:"Video Production",categoryId:"video",title:"Dasar Pencahayaan",
-    intro:"Pencahayaan membantu kamera menangkap objek dengan jelas dan mendukung suasana visual.",
-    sections:[
-      ["Cahaya utama","Kenali fungsi cahaya utama dalam menerangi objek."],
-      ["Cahaya pengisi","Cahaya pengisi membantu mengurangi kontras bayangan."],
-      ["Uji hasil","Periksa hasil melalui monitor kamera sebelum produksi."]
-    ]
-  },
-  "multi-perangkat": {
-    category:"Multimedia",categoryId:"multimedia",title:"Perangkat Produksi Multimedia",
-    intro:"Produksi multimedia dapat melibatkan komputer, kamera, perangkat audio, pencahayaan, dan perangkat pendukung.",
-    sections:[
-      ["Perangkat utama","Tentukan perangkat berdasarkan kebutuhan produksi."],
-      ["Koneksi perangkat","Periksa kompatibilitas dan jalur koneksi."],
-      ["Perawatan","Simpan dan rawat perangkat sesuai petunjuk produsen."]
-    ]
-  },
-  "multi-workflow": {
-    category:"Multimedia",categoryId:"multimedia",title:"Alur Kerja Produksi",
-    intro:"Alur kerja yang terencana membantu proses produksi berjalan lebih tertib.",
-    sections:[
-      ["Perencanaan","Tentukan tujuan, kebutuhan, dan pembagian tugas."],
-      ["Produksi","Laksanakan pengambilan gambar, suara, atau siaran sesuai rencana."],
-      ["Publikasi","Periksa hasil akhir sebelum dipublikasikan."]
-    ]
-  }
-};
-
 const starterCategories = {
   vmix: { title: "vMix & Live Streaming", description: "Belajar produksi live streaming, kamera, transisi, audio, dan output siaran.", materials: [] },
   obs: { title: "OBS Studio", description: "Belajar scene, sumber video, audio, dan siaran.", materials: [] },
@@ -243,14 +91,8 @@ function mergeContent(saved = {}) {
     contact: { ...starter.contact, ...(saved.contact || {}) },
     nav: { ...starter.nav, ...(saved.nav || {}) },
     categories: { ...starterCategories, ...(saved.categories || {}) },
-    tutorials: { ...structuredClone(starterTutorials), ...(saved.tutorials || {}) },
     articles: Array.isArray(saved.articles) ? saved.articles : structuredClone(starter.articles),
-    services: (Array.isArray(saved.services) ? saved.services : structuredClone(starter.services)).map((service, index) => ({
-      ...service,
-      id: service.id || `layanan-${index + 1}`,
-      packages: Array.isArray(service.packages) ? service.packages : [],
-      gallery: Array.isArray(service.gallery) ? service.gallery : []
-    }))
+    services: (Array.isArray(saved.services) ? saved.services : structuredClone(starter.services)).map(service => ({ ...service, packages: Array.isArray(service.packages) ? service.packages.map(pkg => ({ ...pkg, videos: Array.isArray(pkg.videos) ? pkg.videos : [] })) : [] }))
   };
 }
 
@@ -363,6 +205,97 @@ async function save() {
   }
 }
 
+let activePackageIndex = -1;
+
+function renderPackageEditor() {
+  const serviceSelect = $("packageServiceSelect");
+  const packageSelect = $("packageSelect");
+  if (!serviceSelect || !packageSelect) return;
+  const previousService = serviceSelect.value;
+  serviceSelect.innerHTML = (data.services || []).map((service, index) => `<option value="${index}">${esc(service.title)}</option>`).join("");
+  if (!data.services?.length) {
+    packageSelect.innerHTML = "";
+    ["packageTitle", "packageDesc", "packagePrice"].forEach(id => { if ($(id)) $(id).value = ""; });
+    $("packageVideoList").innerHTML = '<p class="package-empty">Tambahkan layanan terlebih dahulu.</p>';
+    return;
+  }
+  if (previousService !== "" && data.services[Number(previousService)]) serviceSelect.value = previousService;
+  renderPackageChoices();
+}
+
+function renderPackageChoices() {
+  const serviceIndex = Number($("packageServiceSelect")?.value || 0);
+  const service = data.services?.[serviceIndex];
+  const select = $("packageSelect");
+  if (!service || !select) return;
+  service.packages = Array.isArray(service.packages) ? service.packages : [];
+  const previousPackage = activePackageIndex;
+  select.innerHTML = service.packages.map((pkg, index) => `<option value="${index}">${esc(pkg.title || `Paket ${index + 1}`)}</option>`).join("");
+  if (!service.packages.length) {
+    activePackageIndex = -1;
+    ["packageTitle", "packageDesc", "packagePrice"].forEach(id => { $(id).value = ""; });
+    $("packageVideoList").innerHTML = '<p class="package-empty">Belum ada paket. Klik “Buat Paket Baru”.</p>';
+    return;
+  }
+  const index = previousPackage >= 0 && service.packages[previousPackage] ? previousPackage : 0;
+  select.value = String(index);
+  loadPackageFields(index);
+}
+
+function loadPackageFields(index) {
+  const service = data.services?.[Number($("packageServiceSelect")?.value || 0)];
+  const pkg = service?.packages?.[index];
+  if (!pkg) return;
+  activePackageIndex = index;
+  $("packageSelect").value = String(index);
+  $("packageTitle").value = pkg.title || "";
+  $("packageDesc").value = pkg.desc || "";
+  $("packagePrice").value = pkg.price || "";
+  pkg.videos = Array.isArray(pkg.videos) ? pkg.videos : [];
+  $("packageVideoList").innerHTML = pkg.videos.map((video, videoIndex) => `
+    <div class="package-video-item" data-package-video="${videoIndex}">
+      <input data-video-title="${videoIndex}" value="${esc(video.title || "")}" placeholder="Judul video">
+      <input data-video-url="${videoIndex}" value="${esc(video.url || "")}" placeholder="https://youtu.be/... atau https://www.youtube.com/watch?v=...">
+      <button type="button" class="small-btn danger" data-remove-video="${videoIndex}">Hapus</button>
+    </div>`).join("") || '<p class="package-empty">Belum ada link YouTube. Klik “Tambah link YouTube”.</p>';
+}
+
+function savePackageFields(showMessage = true) {
+  const service = data.services?.[Number($("packageServiceSelect")?.value || 0)];
+  const pkg = service?.packages?.[activePackageIndex];
+  if (!pkg) return false;
+  const title = $("packageTitle").value.trim();
+  if (!title) { toast("Isi nama paket terlebih dahulu."); return false; }
+  const videos = [];
+  for (const row of $("packageVideoList").querySelectorAll("[data-package-video]")) {
+    const titleInput = row.querySelector("[data-video-title]");
+    const urlInput = row.querySelector("[data-video-url]");
+    const videoTitle = titleInput?.value.trim() || "Video dokumentasi";
+    const url = urlInput?.value.trim() || "";
+    if (!url) continue;
+    let parsed;
+    try { parsed = new URL(url); } catch (_) {
+      toast("Periksa format link YouTube.");
+      urlInput.focus();
+      return false;
+    }
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+    if (parsed.protocol !== "https:" || !["youtube.com", "m.youtube.com", "youtu.be"].includes(host)) {
+      toast("Link video harus menggunakan URL YouTube HTTPS.");
+      urlInput.focus();
+      return false;
+    }
+    videos.push({ title: videoTitle, url: parsed.href });
+  }
+  pkg.title = title;
+  pkg.desc = $("packageDesc").value.trim();
+  pkg.price = $("packagePrice").value.trim();
+  pkg.videos = videos;
+  if (showMessage) toast("Paket diperbarui. Klik Simpan Semua untuk menyimpan online.");
+  renderLists();
+  return true;
+}
+
 function renderLists() {
   const currentCats = Object.entries(data.categories || {});
   $("categoryList").innerHTML = currentCats.map(([id, category]) => `
@@ -390,15 +323,13 @@ function renderLists() {
       </div>
     </div>`).join("") || "<p>Belum ada layanan.</p>";
 
-  renderMaterialManager();
-  fillServiceSelectors();
-
   $("navList").innerHTML = Object.entries(data.nav || {}).map(([key, item]) => `
     <div class="manage-item"><strong>${esc(key.toUpperCase())}</strong>
       <div class="field"><label>Nama menu</label><input data-navlabel="${esc(key)}" value="${esc(item.label)}"></div>
       <label><input type="checkbox" data-navvisible="${esc(key)}" ${item.visible ? "checked" : ""}> Tampilkan menu</label>
-    </div>`).join("");
+    </div>`).join("");  renderPackageEditor();
 }
+
 
 function editItem(kind, index) {
   const item = data[kind]?.[index];
@@ -425,14 +356,9 @@ document.addEventListener("click", event => {
   }
   if (target.dataset.editservice !== undefined) editItem("services", +target.dataset.editservice);
   if (target.dataset.delservice !== undefined && confirm("Hapus layanan ini? Galeri layanan terkait juga akan kehilangan keterkaitannya.")) {
-    const removedService = data.services[+target.dataset.delservice];
-    if (removedService?.gallery?.length && !confirm("Layanan ini memiliki foto online. Hapus juga file fotonya dari Storage?")) return;
-    if (removedService?.gallery?.length) {
-      for (const media of removedService.gallery) if (media.path) removeStoredImage(media.path).catch(console.warn);
-    }
     data.services.splice(+target.dataset.delservice, 1);
     renderLists();
-    fillServiceSelectors();
+    if (typeof fillPortfolioFolders === "function") fillPortfolioFolders();
   }
   if (target.dataset.editcat) {
     const category = data.categories[target.dataset.editcat];
@@ -450,6 +376,44 @@ document.addEventListener("click", event => {
   }
 });
 
+$("packageServiceSelect").addEventListener("change", renderPackageChoices);
+$("packageSelect").addEventListener("change", event => loadPackageFields(Number(event.target.value)));
+$("addPackageVideo").addEventListener("click", () => {
+  if (activePackageIndex < 0) return toast("Pilih atau buat paket terlebih dahulu.");
+  savePackageFields(false);
+  const service = data.services[Number($("packageServiceSelect").value)];
+  service.packages[activePackageIndex].videos.push({ title: "", url: "" });
+  loadPackageFields(activePackageIndex);
+});
+$("packageVideoList").addEventListener("click", event => {
+  const button = event.target.closest("[data-remove-video]");
+  if (!button) return;
+  savePackageFields(false);
+  const service = data.services[Number($("packageServiceSelect").value)];
+  service.packages[activePackageIndex].videos.splice(Number(button.dataset.removeVideo), 1);
+  loadPackageFields(activePackageIndex);
+});
+$("savePackage").addEventListener("click", () => savePackageFields(true));
+$("newPackage").addEventListener("click", () => {
+  const service = data.services?.[Number($("packageServiceSelect").value || 0)];
+  if (!service) return toast("Tambahkan layanan terlebih dahulu.");
+  savePackageFields(false);
+  service.packages = Array.isArray(service.packages) ? service.packages : [];
+  service.packages.push({ title: "Paket Baru", desc: "", price: "", videos: [] });
+  renderPackageEditor();
+  $("packageSelect").value = String(service.packages.length - 1);
+  loadPackageFields(service.packages.length - 1);
+  $("packageTitle").focus();
+});
+$("deletePackage").addEventListener("click", () => {
+  const service = data.services?.[Number($("packageServiceSelect").value || 0)];
+  if (!service || activePackageIndex < 0) return toast("Pilih paket yang ingin dihapus.");
+  if (!confirm("Hapus paket ini beserta daftar link YouTube-nya?")) return;
+  service.packages.splice(activePackageIndex, 1);
+  renderPackageEditor();
+  toast("Paket dihapus. Klik Simpan Semua untuk menyimpan online.");
+});
+
 $("addArticle").onclick = () => {
   const title = get("newArticleTitle");
   if (!title.trim()) return toast("Isi judul artikel dulu.");
@@ -461,11 +425,12 @@ $("addArticle").onclick = () => {
 $("addService").onclick = () => {
   const title = get("newServiceTitle");
   if (!title.trim()) return toast("Isi nama layanan dulu.");
-  data.services.push({ id: makeId(title), title, desc: get("newServiceDesc"), packages: [], gallery: [] });
+  data.services.push({ title, desc: get("newServiceDesc") });
   $("newServiceTitle").value = "";
   $("newServiceDesc").value = "";
   renderLists();
-  fillServiceSelectors();
+  renderPackageEditor();
+  if (typeof fillPortfolioFolders === "function") fillPortfolioFolders();
 };
 
 $("addCategory").onclick = () => {
@@ -534,239 +499,144 @@ $("reset").onclick = () => {
   toast("Pengaturan kembali ke bawaan. Klik Simpan Semua untuk menerapkannya online.");
 };
 
-/* Penyimpanan media online: Supabase Storage bucket nginceng-media. */
-const MEDIA_BUCKET = "nginceng-media";
-let editingMaterialId = null;
-let editingPackageId = null;
+/* Galeri portofolio masih lokal di browser. Integrasi penyimpanan online dilakukan pada tahap berikutnya. */
+const PORT_DB = "ngincengMediaPortfolio";
+const PORT_STORE = "assets";
 
-function makeId(text) {
-  const slug = String(text || "item").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
-  return (slug || "item") + "-" + Date.now().toString(36);
-}
-
-async function getAdminClient() {
-  const client = await window.ngincengAuthReady;
-  if (!client) throw new Error("Sesi admin belum siap. Silakan login ulang.");
-  return client;
-}
-
-function publicMediaUrl(client, path) {
-  const result = client.storage.from(MEDIA_BUCKET).getPublicUrl(path);
-  return result?.data?.publicUrl || "";
-}
-
-async function uploadImage(file, folder) {
-  if (!file || !file.type.startsWith("image/")) throw new Error("Pilih file gambar yang valid.");
-  if (file.size > 25 * 1024 * 1024) throw new Error("Ukuran gambar maksimal 25 MB.");
-  const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-  if (!allowed.includes(file.type)) throw new Error("Format gambar harus JPG, PNG, WebP, atau GIF.");
-  const client = await getAdminClient();
-  const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g, "-");
-  const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 9)}-${safeName}`;
-  const { error } = await client.storage.from(MEDIA_BUCKET).upload(path, file, { cacheControl: "3600", upsert: false, contentType: file.type });
-  if (error) throw error;
-  return { path, url: publicMediaUrl(client, path), mime: file.type, name: file.name };
-}
-
-async function removeStoredImage(path) {
-  if (!path) return;
-  const client = await getAdminClient();
-  const { error } = await client.storage.from(MEDIA_BUCKET).remove([path]);
-  if (error) console.warn("File Storage belum terhapus:", error);
-}
-
-function renderMaterialManager() {
-  const select = $("materialCategory");
-  if (!select) return;
-  const previous = select.value;
-  select.innerHTML = Object.entries(data.categories || {}).map(([id, cat]) => `<option value="${esc(id)}">${esc(cat.title)}</option>`).join("");
-  if (Object.prototype.hasOwnProperty.call(data.categories || {}, previous)) select.value = previous;
-  const categoryId = select.value;
-  const entries = Object.entries(data.tutorials || {}).filter(([, item]) => item.categoryId === categoryId);
-  $("materialList").innerHTML = entries.map(([id, item]) => `<div class="manage-item"><strong>${esc(item.title)}</strong><p>${esc(item.intro || "")}</p><div class="manage-actions"><button class="small-btn" data-editmaterial="${esc(id)}">Edit</button><button class="small-btn danger" data-delmaterial="${esc(id)}">Hapus</button></div></div>`).join("") || "<p>Belum ada materi pada kategori ini.</p>";
-}
-
-function resetMaterialForm() {
-  editingMaterialId = null;
-  ["materialTitle", "materialIntro", "materialBody"].forEach(id => { if ($(id)) $(id).value = ""; });
-  if ($("materialImage")) $("materialImage").value = "";
-  if ($("materialImageName")) $("materialImageName").textContent = "Belum memilih file";
-  if ($("addMaterial")) $("addMaterial").textContent = "Tambah Materi";
-}
-
-function fillServiceSelectors() {
-  ["portfolioService", "packageService"].forEach(id => {
-    const select = $(id);
-    if (!select) return;
-    const previous = select.value;
-    select.innerHTML = (data.services || []).map((service, index) => `<option value="${esc(service.id || String(index))}">${esc(service.title)}</option>`).join("");
-    if ([...select.options].some(option => option.value === previous)) select.value = previous;
+function openPortfolioDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(PORT_DB, 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(PORT_STORE)) db.createObjectStore(PORT_STORE, { keyPath: "id" });
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
   });
-  refreshPortfolioList().catch(error => console.warn(error));
-  renderPackageList();
 }
 
-function getServiceById(id) {
-  return (data.services || []).find((service, index) => (service.id || String(index)) === id);
+async function portfolioAll() {
+  const db = await openPortfolioDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(PORT_STORE, "readonly");
+    const request = transaction.objectStore(PORT_STORE).getAll();
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
 }
 
-function renderPackageList() {
-  const select = $("packageService");
-  if (!select || !$("packageList")) return;
-  const service = getServiceById(select.value);
-  const packages = service?.packages || [];
-  $("packageList").innerHTML = packages.map((item, index) => `<div class="manage-item"><strong>${esc(item.title)}</strong><p>${esc(item.desc || "")}${item.price ? " • " + esc(item.price) : ""}</p><div class="manage-actions"><button class="small-btn" data-editpackage="${index}">Edit</button><button class="small-btn danger" data-delpackage="${index}">Hapus</button></div></div>`).join("") || "<p>Belum ada paket untuk layanan ini.</p>";
+async function portfolioPut(item) {
+  const db = await openPortfolioDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(PORT_STORE, "readwrite");
+    transaction.objectStore(PORT_STORE).put(item);
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }
 
-function resetPackageForm() {
-  editingPackageId = null;
-  ["packageTitle", "packageDesc", "packagePrice"].forEach(id => { if ($(id)) $(id).value = ""; });
-  if ($("addPackage")) $("addPackage").textContent = "Tambah Paket";
+async function portfolioDelete(id) {
+  const db = await openPortfolioDB();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(PORT_STORE, "readwrite");
+    transaction.objectStore(PORT_STORE).delete(id);
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }
+
+function portfolioServices() { return data.services || []; }
 
 async function refreshPortfolioList() {
-  const select = $("portfolioService");
-  if (!select || !$("portfolioList")) return;
-  const service = getServiceById(select.value);
-  const entries = service?.gallery || [];
-  $("portfolioList").innerHTML = entries.map(item => `<div class="manage-item"><div class="media-row"><img class="media-thumb" src="${esc(item.url)}" alt="${esc(item.title)}"><div style="flex:1"><strong>${esc(item.title)}</strong><p>${esc(item.caption || "")}</p></div><button class="small-btn danger" data-delete-media="${esc(item.id)}">Hapus</button></div></div>`).join("") || "<p>Folder ini belum memiliki foto.</p>";
+  const serviceId = $("portfolioService").value;
+  const all = await portfolioAll();
+  const entries = all.filter(item => item.serviceId === serviceId);
+  $("portfolioList").innerHTML = entries.map(item => `
+    <div class="manage-item"><div class="media-row">
+      <div class="media-thumb" id="thumb-${esc(item.id)}"></div>
+      <div style="flex:1"><strong>${esc(item.title)}</strong><p>${esc(item.caption || "")} • ${item.kind === "video" ? "Video" : "Foto"}</p></div>
+      <button class="small-btn danger" data-delete-media="${esc(item.id)}">Hapus</button>
+    </div></div>`).join("") || "<p>Folder ini belum memiliki foto atau video.</p>";
+
+  for (const item of entries) {
+    const node = $("thumb-" + item.id);
+    if (node) {
+      if (item.kind === "image") {
+        const image = document.createElement("img");
+        image.className = "media-thumb";
+        image.src = URL.createObjectURL(item.blob);
+        node.replaceWith(image);
+      } else {
+        node.textContent = "VIDEO";
+      }
+    }
+  }
 }
 
-$("materialCategory")?.addEventListener("change", renderMaterialManager);
-$("cancelMaterialEdit")?.addEventListener("click", resetMaterialForm);
-$("materialImage")?.addEventListener("change", () => { $("materialImageName").textContent = $("materialImage").files[0]?.name || "Belum memilih file"; });
-$("addMaterial")?.addEventListener("click", async () => {
-  const title = get("materialTitle").trim();
-  const categoryId = get("materialCategory");
-  if (!title) return toast("Isi judul materi terlebih dahulu.");
-  if (!categoryId || !data.categories[categoryId]) return toast("Pilih kategori materi.");
-  const existing = editingMaterialId ? data.tutorials[editingMaterialId] : null;
-  const id = editingMaterialId || makeId(title);
-  const imageFile = $("materialImage").files[0];
-  let image = existing?.image || "";
-  let imagePath = existing?.imagePath || "";
-  try {
-    if (imageFile) {
-      const uploaded = await uploadImage(imageFile, "education");
-      image = uploaded.url;
-      imagePath = uploaded.path;
-    }
-    const category = data.categories[categoryId];
-    const body = get("materialBody").trim();
-    const sections = existing?.sections || [];
-    data.tutorials[id] = {
-      ...(existing || {}), id, category: category.title, categoryId,
-      title, intro: get("materialIntro").trim(), body,
-      sections, image, imagePath
-    };
-    if (imageFile && existing?.imagePath && existing.imagePath !== imagePath) await removeStoredImage(existing.imagePath);
-    renderMaterialManager();
-    resetMaterialForm();
-    toast("Materi siap disimpan. Klik Simpan Semua agar tampil online.");
-  } catch (error) {
-    console.error(error);
-    toast("Gagal mengunggah gambar: " + (error.message || "Periksa Storage Supabase."));
-  }
-});
+function fillPortfolioFolders() {
+  const select = $("portfolioService");
+  const previousValue = select.value;
+  select.innerHTML = portfolioServices().map((service, index) =>
+    `<option value="${index}">${esc(service.title)}</option>`
+  ).join("");
+  if (portfolioServices()[Number(previousValue)]) select.value = previousValue;
+  refreshPortfolioList().catch(() => toast("Tidak dapat membaca galeri di browser ini."));
+}
 
-$("packageService")?.addEventListener("change", renderPackageList);
-$("cancelPackageEdit")?.addEventListener("click", resetPackageForm);
-$("addPackage")?.addEventListener("click", () => {
-  const service = getServiceById(get("packageService"));
-  const title = get("packageTitle").trim();
-  if (!service) return toast("Pilih layanan terlebih dahulu.");
-  if (!title) return toast("Isi nama paket terlebih dahulu.");
-  service.packages ||= [];
-  const payload = { id: editingPackageId || makeId(title), title, desc: get("packageDesc").trim(), price: get("packagePrice").trim() };
-  if (editingPackageId) {
-    const index = service.packages.findIndex(item => item.id === editingPackageId);
-    if (index >= 0) service.packages[index] = payload;
-  } else service.packages.push(payload);
-  resetPackageForm();
-  renderPackageList();
-  toast("Paket siap disimpan. Klik Simpan Semua.");
-});
-
-$("portfolioService")?.addEventListener("change", refreshPortfolioList);
-$("portfolioFiles")?.addEventListener("change", () => {
+$("portfolioService").addEventListener("change", () => refreshPortfolioList().catch(() => {}));
+$("portfolioFiles").addEventListener("change", () => {
   $("portfolioFileName").textContent = [...$("portfolioFiles").files].map(file => file.name).join(", ") || "Belum memilih file";
 });
-$("addPortfolio")?.addEventListener("click", async () => {
+
+$("addPortfolio").addEventListener("click", async () => {
   const files = [...$("portfolioFiles").files];
-  const service = getServiceById(get("portfolioService"));
-  if (!files.length) return toast("Pilih gambar terlebih dahulu.");
-  if (!service) return toast("Tambahkan layanan terlebih dahulu.");
-  service.gallery ||= [];
-  const uploadedPaths = [];
+  const serviceIndex = Number($("portfolioService").value);
+  if (!files.length) return toast("Pilih foto atau video dahulu.");
+  if (!portfolioServices()[serviceIndex]) return toast("Tambahkan layanan terlebih dahulu.");
+
   try {
     for (const file of files) {
-      const uploaded = await uploadImage(file, `services/${service.id || "service"}`);
-      uploadedPaths.push(uploaded.path);
-      service.gallery.push({ id: makeId(file.name), path: uploaded.path, url: uploaded.url, title: get("mediaTitle").trim() || file.name, caption: get("mediaCaption").trim(), mime: uploaded.mime, createdAt: new Date().toISOString() });
+      if (file.size > 25 * 1024 * 1024) {
+        toast(file.name + " melebihi batas 25 MB.");
+        continue;
+      }
+      const kind = file.type.startsWith("image/") ? "image" :
+        (file.type.startsWith("video/") ? "video" : "");
+      if (!kind) continue;
+      await portfolioPut({
+        id: "media-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+        serviceId: String(serviceIndex),
+        title: $("mediaTitle").value.trim() || file.name,
+        caption: $("mediaCaption").value.trim(),
+        kind,
+        mime: file.type,
+        name: file.name,
+        blob: file,
+        createdAt: Date.now()
+      });
     }
     $("portfolioFiles").value = "";
     $("portfolioFileName").textContent = "Belum memilih file";
     $("mediaTitle").value = "";
     $("mediaCaption").value = "";
     await refreshPortfolioList();
-    toast("Foto berhasil diunggah. Klik Simpan Semua agar galeri tampil di website.");
+    toast("Media berhasil ditambahkan ke galeri lokal browser ini.");
   } catch (error) {
     console.error(error);
-    // Keep already uploaded files in the current editor state, so user can retry saving metadata.
-    await refreshPortfolioList();
-    toast("Unggah belum selesai: " + (error.message || "Periksa izin Storage dan koneksi."));
+    toast("Penyimpanan browser tidak cukup atau tidak tersedia.");
   }
 });
 
 document.addEventListener("click", async event => {
-  const target = event.target.closest("button");
-  if (!target) return;
-  if (target.dataset.editmaterial) {
-    const item = data.tutorials[target.dataset.editmaterial];
-    if (!item) return;
-    editingMaterialId = target.dataset.editmaterial;
-    $("materialTitle").value = item.title || "";
-    $("materialIntro").value = item.intro || "";
-    $("materialBody").value = item.body || (item.sections || []).map(section => section.join("\n")).join("\n\n");
-    $("materialCategory").value = item.categoryId;
-    $("addMaterial").textContent = "Simpan Edit Materi";
-    $("materialTitle").scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-  if (target.dataset.delmaterial) {
-    const item = data.tutorials[target.dataset.delmaterial];
-    if (!item || !confirm("Hapus materi ini?")) return;
-    delete data.tutorials[target.dataset.delmaterial];
-    if (item.imagePath) await removeStoredImage(item.imagePath);
-    renderMaterialManager();
-    toast("Materi dihapus. Klik Simpan Semua.");
-  }
-  if (target.dataset.editpackage !== undefined) {
-    const service = getServiceById(get("packageService"));
-    const item = service?.packages?.[Number(target.dataset.editpackage)];
-    if (!item) return;
-    editingPackageId = item.id;
-    $("packageTitle").value = item.title || "";
-    $("packageDesc").value = item.desc || "";
-    $("packagePrice").value = item.price || "";
-    $("addPackage").textContent = "Simpan Edit Paket";
-  }
-  if (target.dataset.delpackage !== undefined) {
-    const service = getServiceById(get("packageService"));
-    const index = Number(target.dataset.delpackage);
-    if (!service?.packages || !confirm("Hapus paket ini?")) return;
-    service.packages.splice(index, 1);
-    renderPackageList();
-  }
-  if (target.dataset.deleteMedia) {
-    const service = getServiceById(get("portfolioService"));
-    const item = service?.gallery?.find(entry => entry.id === target.dataset.deleteMedia);
-    if (!item || !confirm("Hapus foto dari galeri online?")) return;
+  const id = event.target.dataset.deleteMedia;
+  if (id && confirm("Hapus foto/video dari galeri?")) {
     try {
-      if (item.path) await removeStoredImage(item.path);
-      service.gallery = service.gallery.filter(entry => entry.id !== item.id);
+      await portfolioDelete(id);
       await refreshPortfolioList();
-      toast("Foto dihapus. Klik Simpan Semua.");
-    } catch (error) { toast("Gagal menghapus foto: " + (error.message || "Periksa izin Storage.")); }
+      toast("File dihapus dari galeri lokal.");
+    } catch (error) {
+      toast("Gagal menghapus file galeri.");
+    }
   }
 });
 
@@ -774,7 +644,7 @@ async function initDashboard() {
   // Tampilkan cadangan lokal terlebih dahulu agar formulir tidak kosong jika koneksi gagal.
   readLocalBackup();
   putFields();
-  fillServiceSelectors();
+  fillPortfolioFolders();
 
   try {
     const client = await window.ngincengAuthReady;
@@ -799,7 +669,8 @@ async function initDashboard() {
     } else {
       $("status").textContent = "Data awal — siap disimpan online";
     }
-    fillServiceSelectors();
+    fillPortfolioFolders();
+    renderPackageEditor();
     console.log("Dashboard berhasil terhubung ke Supabase.");
   } catch (error) {
     console.error("Gagal memuat data Supabase:", error);
